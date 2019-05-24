@@ -52,7 +52,7 @@ class Events(commands.Cog):
                 print("Events: 3b: "+str(self.b))
                 print("Events: Did not match")
                 print("-------"+str(self.i)+"-------")
-            print("Events: Completed time check. - "+core.vars.currenttime)
+        print("Events: Completed time check. - "+core.vars.currenttime)
 
     @run.before_loop
     async def before_loop(self): #waits on bot to connect before starting the events code
