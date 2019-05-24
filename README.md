@@ -12,6 +12,7 @@ You won't really have a use for this unless you're on my Discord server, as its 
   * Command to reload the events.cfg file without a reboot (WIP)
 
 ### Planned features
+* Server activity tracking
 * Allow players to set their own time zone, and others to query it.
 
 ### Contributing
