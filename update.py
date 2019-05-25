@@ -10,7 +10,7 @@ if("error" in checkout):
     errorfile = open(dir+"\\update_error.temp","w+")
     exit()
 print("Changed to master branch")
-subprocess.run('git fetch',shell=True)
+subprocess.run('git pull',shell=True)
 print("Fetched code, making success note")
 successfile = open(dir+"\\update_success.temp","w+")
 print("Rebooting bot")

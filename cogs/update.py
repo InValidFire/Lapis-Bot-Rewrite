@@ -14,7 +14,7 @@ class Update(commands.Cog):
     @commands.command()
     async def update(self,ctx):
         """ Updates the bot's code from the master branch """
-        
+
         role = discord.utils.get(ctx.guild.roles, name="Lapis Lord")
         #look into the specifics of ctx works in the discord.py documentation later, appears to get the context of the command, but what does that include
         dir = os.getcwd()
@@ -24,7 +24,7 @@ class Update(commands.Cog):
                 await ctx.send("W: Rebooting for an update!")
                 exit()
             if(sys.platform == 'linux'): #handles updates on linux systems
-                subprocess.run(['x-terminal-emulator','-e','python3.7',dir+'\\update.py'],shell=True)
+                subprocess.run(['x-terminal-emulator','-x','python3.7',dir+'\\update.py'],shell=True)
                 await ctx.send("L: Rebooting for an update!")
                 exit()
         await ctx.send("You do not have permission to use this command.")
