@@ -9,7 +9,7 @@ import core.vars
 logging.basicConfig(level=logging.ERROR)
 
 bot = commands.Bot(command_prefix='+', description='Various things Valdrea needs')
-cogs = ['cogs.timer', 'cogs.events', 'cogs.math']
+cogs = ['cogs.timer', 'cogs.events', 'cogs.math', 'cogs.update']
 gsl = core.saveload.Global() #Global saving/loading class
 gset = core.setup.Global() #Global setup class
 
