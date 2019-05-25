@@ -12,6 +12,7 @@ bot = commands.Bot(command_prefix='+', description='Various things Valdrea needs
 cogs = ['cogs.timer', 'cogs.events', 'cogs.math', 'cogs.update']
 gsl = core.saveload.Global() #Global saving/loading class
 gset = core.setup.Global() #Global setup class
+dir = os.getcwd
 
 try:
     gsl.load()
@@ -31,8 +32,18 @@ if __name__ == '__main__':
 async def on_ready():
     print("Logged in as {0.user}".format(bot))
     channel = bot.get_channel(547799429072027649)
-    if(core.vars.debug == False):
-        await channel.send("It's Lapis.")
+    try:
+        update_success_check = open(dir+"\update_success","r")
+        await channel.send("Update Complete!")
+        os.remove(dir+"\update_success")
+    except IOError:
+        try:
+            update_error_check = open(dir+"\update_error","w")
+            await channel.send("Uh oh, something went wrong. Check if you have commited changes.")
+            os.remove(dir+"\update_error")
+        except IOError:
+            if(core.vars.debug == False):
+                await channel.send("It's Lapis.")
 
 bot.run(os.environ['DISCORDBOTTOKEN'], reconnect=True)
 #unless otherwise stated, code written by Fire#4224
