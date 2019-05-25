@@ -44,6 +44,12 @@ class Math(commands.Cog):
         if(self.debug == True and core.vars.debug == True):
             print("Math: Added {} and {}".format(num1,num2))
 
+    async def sub(self,ctx,num1,num2):
+        """ Subtracts two numbers """
+        await ctx.send(str(float(num1)-float(num2)))
+        if(self.debug == True and core.vars.debug == True):
+            print("Math: Subtracted {} and {}".format(num1,num2))
+
     @commands.command()
     async def nether(self,ctx,xcoord,zcoord):
         """ Converts given Overworld coordinates to Nether coordinates """
