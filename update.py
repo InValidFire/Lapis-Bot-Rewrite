@@ -5,14 +5,16 @@ import sys
 
 dir = os.getcwd()
 print("Starting Update Script")
-checkout = subprocess.check_output('git checkout master',shell=True) #need to find a way to stop the script if git doesn't properly change branches, look into subprocess more.
+checkout = str(subprocess.check_output('git checkout master',shell=True))
 if("error" in checkout):
-    errorfile = open(dir+"\update_error","w+")
+    errorfile = open(dir+"\\update_error.temp","w+")
+    exit()
 print("Changed to master branch")
 subprocess.run('git fetch',shell=True)
 print("Fetched code, making success note")
-successfile = open(dir+"\update_success","w+")
+successfile = open(dir+"\\update_success.temp","w+")
 print("Rebooting bot")
+time.sleep(2)
 if(sys.platform == 'win32'): #restarts bot on windows systems
     subprocess.run(['start','py',dir+'\\bot.py'],shell=True)
 if(sys.platform == 'linux'): #restarts bot on linux systems
