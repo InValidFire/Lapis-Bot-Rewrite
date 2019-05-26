@@ -27,7 +27,7 @@ class System(commands.Cog):
         """ Updates the bot's code to math the Github's master branch [Lapis Lord only] """
 
         #look into the specifics of ctx works in the discord.py documentation later, appears to get the context of the command, but what does that include
-        dir = os.getcwd())
+        dir = os.getcwd()
         #if(str(ctx.user.id) in file:
         if(self.lordcheck(ctx.author.id)==True): #Runs the lordcheck() function to see if the user has Lapis Lord permissions.
             if(sys.platform == 'win32'): #handles updates on windows systems
