@@ -17,13 +17,13 @@ class System(commands.Cog):
         if(core.vars.debug==True and self.debug==True):
             print("System: Permission check started")
         file = open("Data/Global/Config/lapislord.cfg","r")
-        if(str(id) in file):
-            if(core.vars.debug==True and self.debug==True):
-                print("System: Permission check passed")
-            return True
-        if(str(id) not in file):
-            if(core.vars.debug==True and self.debug==True):
-                print("System: Permission check failed")
+        for line in file:
+            if(str(id) in line):
+                if(core.vars.debug==True and self.debug==True):
+                    print("System: Permission check passed")
+                return True
+        if(core.vars.debug==True and self.debug==True):
+            print("System: Permission check failed")
             return False
 
     @commands.command()
