@@ -62,7 +62,7 @@ class System(commands.Cog):
         if(ctx.author.id == core.vars.owner_id):
             if(mode == "add"):
                 with open("Data/Global/Config/lapislord.cfg","a+") as file:
-                    file.append(str(user.id)+"\n")
+                    file.write(str(user.id)+"\n")
                     file.close()
                     await ctx.send("Added "+user.id+" to the Lapis Lord roster.")
             if(mode == "list"):
