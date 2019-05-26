@@ -1,7 +1,8 @@
 import os
 import json
 import time
-
+#Needs to be turned into a cog, allow us to run directorycheck on init, checking that all the directories are there.
+#Ran into issue where I had to delete the Data directory to get this code to run. And would like to be able to trigger a directorycheck via a command.
 def newtemp(date):
     newtimevars = {}
     newtimevars['times'] = []
@@ -66,6 +67,7 @@ class Global:
         dir = os.getcwd()
         try:
             os.makedirs(dir+"/Data/Global/Temp")
+            os.makedirs(dir+"/Data/Global/Config")
             os.chdir(dir+"/Data/Global/Temp")
             newtemp(time.strftime("%m-%d-%Y"))
             os.chdir(dir)
