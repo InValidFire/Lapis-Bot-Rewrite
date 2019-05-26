@@ -7,7 +7,7 @@ import shlex
 import core.vars
 
 class System(commands.Cog):
-    debug = True
+    debug = False
 
     def __init__(self,bot):
         print("System: Initialized")
@@ -48,6 +48,7 @@ class System(commands.Cog):
 
     @commands.command()
     async def id(self,ctx,user: discord.User=None):
+        """Gets ID of mentioned user"""
         if(self.lordcheck(ctx.author.id)==True):
             if(user != None):
                 await ctx.send("Mentioned ID: "+str(user.id))
@@ -55,6 +56,13 @@ class System(commands.Cog):
                 await ctx.send("Author ID: "+str(ctx.author.id))
         else:
             await ctx.send("You do not have permission to use this command.")
+
+    @commands.command()
+    async def getname(self,ctx,id):
+        """Gets name of given ID"""
+        if(self.lordcheck(ctx.author.id)==True):
+            user = self.bot.get_user(int(id))
+            await ctx.send(user.name)
 
     @commands.command()
     async def lapislord(self,ctx,mode,user: discord.User=None): # Owner only command that allows me to trust users with certain commands
@@ -69,7 +77,9 @@ class System(commands.Cog):
                 try:
                     message = ""
                     file = open("Data/Global/Config/lapislord.cfg","r")
-                    message = file.read()
+                    for line in file:
+                        user = self.bot.get_user(int(line))
+                        message = line+" - "+user.name
                     await ctx.send(message)
                 except IOError:
                     file = open("Data/Global/Config/lapislord.cfg","w+") #Before push: have this be made in core.setup
@@ -79,6 +89,9 @@ class System(commands.Cog):
                 for line in file:
                     line.replace(str(user.id), "")
                 await ctx.send("Removed "+user.id+" from the Lapis Lord roster.")
+            if(mode == "reset"):
+                file = open("Data/Global/Config/lapislord.cfg","w+")
+                await ctx.send("Reset the lapislord.cfg")
         if(ctx.message.author.id != core.vars.owner_id):
             await ctx.send("This is an owner only command.")
 
