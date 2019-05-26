@@ -47,6 +47,7 @@ ___
 ### Current Priorities
 * `cogs.system` commands completed
 * Server Activity Tracking
+* Decent Logging system
 ___
 ### Contributing
 If you're feeling kind and you see a bug or issue that you can fix, feel free to make modifications and submit a pull request!
