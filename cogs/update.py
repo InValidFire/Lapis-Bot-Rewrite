@@ -24,7 +24,7 @@ class Update(commands.Cog):
                 await ctx.send("W: Rebooting for an update!")
                 exit()
             if(sys.platform == 'linux'): #handles updates on linux systems
-                process = subprocess.Popen(['x-terminal-emulator','-e','python3.7 bot.py'],shell=True, stdout=PIPE)
+                process = subprocess.Popen(['x-terminal-emulator','-e','python3.7 bot.py'],shell=True, stdout=subproces.PIPE)
                 print(process.returncode)
                 await ctx.send("L: Rebooting for an update!")
                 exit()
