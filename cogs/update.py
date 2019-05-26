@@ -24,7 +24,8 @@ class Update(commands.Cog):
                 await ctx.send("W: Rebooting for an update!")
                 exit()
             if(sys.platform == 'linux'): #handles updates on linux systems
-                subprocess.run(['x-terminal-emulator','-e','bash','-c','"sh','Update.sh;','bash"'],shell=True)
+                process = subprocess.Popen(['x-terminal-emulator','-e','bash','-c','"sh','Update.sh;','bash"'],shell=True, stdout=subprocess.PIPE)
+                print(process.returncode)
                 await ctx.send("L: Rebooting for an update!")
                 exit()
         await ctx.send("You do not have permission to use this command.")
