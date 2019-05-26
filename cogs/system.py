@@ -72,15 +72,19 @@ class System(commands.Cog):
                 with open("Data/Global/Config/lapislord.cfg","a+") as file:
                     file.write(str(user.id)+"\n")
                     file.close()
-                    await ctx.send("Added "+user.id+" to the Lapis Lord roster.")
+                await ctx.send("Added "+str(user.name)+" to the Lapis Lord roster.")
             if(mode == "list"):
                 try:
-                    message = ""
-                    file = open("Data/Global/Config/lapislord.cfg","r")
-                    for line in file:
-                        user = self.bot.get_user(int(line))
-                        message = user.name+" - "+line
-                    await ctx.send(message)
+                    with open("Data/Global/Config/lapislord.cfg","r") as file:
+                        idlist = [] #holds the ids for processing
+                        message = ""
+                        for line in file:
+                            idlist.append(line.rstrip("\n")) #stores each line of the lapislord.cfg as new item in the idlist
+                        print(idlist)
+                        for id in idlist: #creates the message using the idlist
+                            user = self.bot.get_user(int(id))
+                            message = message + user.name+" - "+id+"\n"
+                        await ctx.send(message)
                 except IOError:
                     file = open("Data/Global/Config/lapislord.cfg","w+") #Before push: have this be made in core.setup
                     await ctx.send("Couldn't find lapislord.cfg: Made new file.")
@@ -88,7 +92,7 @@ class System(commands.Cog):
                 file = open("Data/Global/Config/lapislord.cfg","r+")
                 for line in file:
                     line.replace(str(user.id), "")
-                await ctx.send("Removed "+user.id+" from the Lapis Lord roster.")
+                await ctx.send("Removed "+str(user.name)+" from the Lapis Lord roster.")
             if(mode == "reset"):
                 file = open("Data/Global/Config/lapislord.cfg","w+")
                 await ctx.send("Reset the lapislord.cfg")
