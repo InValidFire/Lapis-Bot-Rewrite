@@ -79,7 +79,7 @@ class System(commands.Cog):
                     file = open("Data/Global/Config/lapislord.cfg","r")
                     for line in file:
                         user = self.bot.get_user(int(line))
-                        message = line+" - "+user.name
+                        message = user.name+" - "+line
                     await ctx.send(message)
                 except IOError:
                     file = open("Data/Global/Config/lapislord.cfg","w+") #Before push: have this be made in core.setup
