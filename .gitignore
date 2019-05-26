@@ -1,0 +1,4 @@
+Data/++
+*.temp
+__pycache__/
+*.cfg
