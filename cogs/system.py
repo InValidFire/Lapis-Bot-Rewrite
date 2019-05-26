@@ -15,11 +15,15 @@ class System(commands.Cog):
 
     def lordcheck(self,id):
         if(core.vars.debug==True and self.debug==True):
-            print("System: Permission check passed")
+            print("System: Permission check started")
         file = open("Data/Global/Config/lapislord.cfg","r")
         if(str(id) in file):
+            if(core.vars.debug==True and self.debug==True):
+                print("System: Permission check passed")
             return True
         if(str(id) not in file):
+            if(core.vars.debug==True and self.debug==True):
+                print("System: Permission check failed")
             return False
 
     @commands.command()
@@ -56,11 +60,11 @@ class System(commands.Cog):
     async def lapislord(self,ctx,mode,user: discord.User=None): # Owner only command that allows me to trust users with certain commands
         """ Manage Lapis Lords [Owner Only]"""
         if(ctx.author.id == core.vars.owner_id):
-            await ctx.send("You have permission.")
             if(mode == "add"):
-                with open("Data/Global/Config/lapislord.cfg","r+") as file:
-                    file.write(str(user.id))
+                with open("Data/Global/Config/lapislord.cfg","a+") as file:
+                    file.append(str(user.id)+"\n")
                     file.close()
+                    await ctx.send("Added "+user.id+" to the Lapis Lord roster.")
             if(mode == "list"):
                 try:
                     message = ""
@@ -74,6 +78,7 @@ class System(commands.Cog):
                 file = open("Data/Global/Config/lapislord.cfg","r+")
                 for line in file:
                     line.replace(str(user.id), "")
+                await ctx.send("Removed "+user.id+" from the Lapis Lord roster.")
         if(ctx.message.author.id != core.vars.owner_id):
             await ctx.send("This is an owner only command.")
 
