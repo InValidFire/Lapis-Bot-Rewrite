@@ -14,7 +14,7 @@ class Math(commands.Cog):
 
     @commands.command(aliases=['deg','temp','temperature'])
     async def degree(self, ctx, temperature, scale):
-        """ Convert temperatures between fahrenheit and celsius """
+        """ Convert temperatures between fahrenheit, celsius and kelvin """
         if(scale == "C" or scale == "c" or scale == "celsius" or scale == "celsius"):
             celsius = float(temperature)
             fahrenheit = celsius*9/5+32
@@ -37,35 +37,35 @@ class Math(commands.Cog):
             if(self.debug == True and core.vars.debug == True):
                 print("Math: Converted Kelvin to Celsius")
 
-    @commands.command()
-    async def add(self,ctx,num1,num2):
+    @commands.command(aliases=['add'])
+    async def addition(self,ctx,num1,num2):
         """ Adds two numbers together """
         await ctx.send(str(float(num1)+float(num2)))
         if(self.debug == True and core.vars.debug == True):
             print("Math: Added {} and {}".format(num1,num2))
 
-    @commands.command()
-    async def sub(self,ctx,num1,num2):
+    @commands.command(aliases=['sub'])
+    async def subtract(self,ctx,num1,num2):
         """ Subtracts two numbers """
         await ctx.send(str(float(num1)-float(num2)))
         if(self.debug == True and core.vars.debug == True):
             print("Math: Subtracted {} and {}".format(num1,num2))
 
-    @commands.command()
+    @commands.command(aliases=['times'])
     async def multiply(self,ctx,num1,num2):
         """ Multiplies two numbers """
         await ctx.send(str(float(num1)*float(num2)))
         if(self.debug == True and core.vars.debug == True):
             print("Math: Multiplied {} and {}".format(num1,num2))
 
-    @commands.command()
+    @commands.command(aliases=['div'])
     async def divide(self,ctx,num1,num2):
         """ Divides two numbers """
         await ctx.send(str(float(num1)/float(num2)))
         if(self.debug == True and core.vars.debug == True):
             print("Math: Divided {} and {}".format(num1,num2))
 
-    @commands.command()
+    @commands.command(aliases=['portal'])
     async def nether(self,ctx,xcoord,zcoord):
         """ Converts given Overworld coordinates to Nether coordinates """
         xcoord = float(xcoord)

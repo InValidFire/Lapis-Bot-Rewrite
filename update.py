@@ -6,12 +6,12 @@ import shlex
 print("Starting Update Script")
 checkout = str(subprocess.check_output('git checkout master',shell=True))
 if("error" in checkout):
-    errorfile = open("update_error.temp","w+")
+    errorfile = open("update_error.temp","w+") #to be processed by the bot at boot if present.
     exit()
 print("Changed to master branch")
 subprocess.run('git pull',shell=True)
 print("Fetched code, making success note")
-successfile = open("update_success.temp","w+")
+successfile = open("update_success.temp","w+") #to be processed by the bot at boot if present.
 print("Rebooting bot")
 time.sleep(2)
 if(sys.platform == 'win32'): #restarts bot on windows systems

@@ -14,9 +14,9 @@ class Update(commands.Cog):
 
     @commands.command()
     async def update(self,ctx):
-        """ Updates the bot's code from the master branch """
+        """ Updates the bot's code to math the Github's master branch [Lapis Lord only] """
 
-        role = discord.utils.get(ctx.guild.roles, name="Lapis Lord")
+        role = discord.utils.get(ctx.guild.roles, name="Lapis Lord") #change this soon to instead load user IDs from a list (see README.md)
         #look into the specifics of ctx works in the discord.py documentation later, appears to get the context of the command, but what does that include
         dir = os.getcwd()
         if(role in ctx.author.roles):

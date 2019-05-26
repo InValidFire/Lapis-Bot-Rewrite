@@ -31,7 +31,7 @@ if __name__ == '__main__':
 @bot.event
 async def on_ready():
     print("Logged in as {0.user}".format(bot))
-    channel = bot.get_channel(547799429072027649)
+    channel = bot.get_channel(core.vars.channel_testing)
     update = False
     if(os.path.exists("update_success.temp")):
         await channel.send("Update Complete!")
