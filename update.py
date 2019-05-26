@@ -19,7 +19,7 @@ time.sleep(2)
 if(sys.platform == 'win32'): #restarts bot on windows systems
     subprocess.run(['start','py',dir+'\\bot.py'],shell=True)
 if(sys.platform == 'linux'): #restarts bot on linux systems
-    process = subprocess.Popen(shlex.split("""x-terminal-emulator -e 'bash -c "python3.7 bot.py"'"""), stdout=subprocess.PIPE)
+    process = subprocess.Popen(shlex.split("""x-terminal-emulator -e python3.7 bot.py"""), stdout=subprocess.PIPE)
     #process = subprocess.Popen(['x-terminal-emulator','-e','python3.7 bot.py'],shell=True, stdout=subprocess.PIPE)
     print(process.returncode)
 print("Closing Update Script")
