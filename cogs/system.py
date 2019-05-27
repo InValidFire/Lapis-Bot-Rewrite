@@ -41,7 +41,7 @@ class System(commands.Cog):
             if(sys.platform == 'linux'): #handles updates on linux systems
                 subprocess.Popen(shlex.split("""python3.7 update.py &"""), stdout=subprocess.PIPE)
                 await ctx.send("Linux: Rebooting for an update!")
-                exit()
+                ctx.bot.close()
         else:
             await ctx.send("You do not have permission to use this command.")
 
