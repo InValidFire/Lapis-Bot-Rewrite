@@ -57,6 +57,18 @@ class System(commands.Cog):
             await ctx.send("You do not have permission to use this command.")
 
     @commands.command()
+    async def restartpi(self,ctx):
+        if(self.lordcheck(ctx.author.id)==True):
+            if(sys.platform == 'linux'):
+                await ctx.send("Linux: Restarting Raspberry Pi!")
+                subprocess.run(shlex.split("""python3.7 restartpi.py"""))
+                await ctx.bot.close()
+            else:
+                await ctx.send("This is a Linux only command.")
+        else:
+            await ctx.send("You do not have permission to use this command.")
+
+    @commands.command()
     async def branch(self,ctx,mode,branch_name=None):
         """ Modify the branch the bot operates on
 
