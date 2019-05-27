@@ -16,4 +16,4 @@ try:
     if(sys.platform == 'linux'): #restarts bot on linux systems
         process = subprocess.run(shlex.split("""python3.7 bot.py &"""))
     print("Closing Restart Script")
-    quit()
+    sys.exit()

@@ -17,7 +17,7 @@ try:
         process = subprocess.run(shlex.split("""python3.7 bot.py &"""))
     print("Closing Update Script")
     time.sleep(3)
-    quit()
+    sys.exit()
 except:
     errorfile = open("update_error.temp","w+") #to be processed by the bot at boot if present.
     errorfile.close()
@@ -29,4 +29,4 @@ except:
         process = subprocess.run(shlex.split("""python3.7 bot.py &"""))
     print("Closing Update Script")
     time.sleep(3)
-    quit()
+    sys.exit()
