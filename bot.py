@@ -61,7 +61,7 @@ async def on_ready():
         await channel.send("We're back!")
         os.remove("restart.temp")
         restart = True
-    if(core.vars.debug == False and update == False and branch == False and update == False):
+    if(core.vars.debug == False and update == False and branch == False and restart == False):
         await channel.send("It's Lapis.")
 
 bot.run(os.environ['DISCORDBOTTOKEN'], reconnect=True)
