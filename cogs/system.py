@@ -48,7 +48,7 @@ class System(commands.Cog):
     @commands.command()
     async def branch(self,ctx,mode,branch_name=None):
         """ Modify the branch the bot operates on
-        
+
             Modes:
             - swap: changes branch to 'branch_name'
             - status: show the output of 'git status' """
@@ -65,6 +65,7 @@ class System(commands.Cog):
                 if(sys.platform == 'linux'):
                     file = open("branch.temp","w+")
                     file.write(branch_name)
+                    file.close()
                     subprocess.Popen(shlex.split("""x-terminal-emulator -e python3.7 branch.py"""), stdout=subprocess.PIPE)
                     await ctx.send("Linux: Rebooting for a branch change to '"+branch_name+"'!")
                     exit()
