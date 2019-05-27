@@ -10,5 +10,5 @@ successfile = open("restartpi.temp","w+") #to be processed by the bot at boot if
 successfile.close()
 print("Rebooting Raspberry Pi")
 time.sleep(2)
-process = subprocess.run(shlex.split("""sudo restart"""))
+process = subprocess.run(shlex.split("""sudo reboot"""))
 sys.exit()
