@@ -89,9 +89,17 @@ class System(commands.Cog):
                     file = open("Data/Global/Config/lapislord.cfg","w+") #Before push: have this be made in core.setup
                     await ctx.send("Couldn't find lapislord.cfg: Made new file.")
             if(mode == "remove"):
-                file = open("Data/Global/Config/lapislord.cfg","r+")
+                file = open("Data/Global/Config/lapislord.cfg","r")
+                s = "" # line processing variable
+                text = "" # holds file rewrite
                 for line in file:
-                    line.replace(str(user.id), "")
+                    s = line
+                    s = s.replace(str(user.id)+"\n","") #removes all instances the user.id shows up
+                    text = text + s # adds whatever's left to the rewrite
+                file.close()
+                file = open("Data/Global/Config/lapislord.cfg","w+") #resets the lapislord.cfg file
+                file.write(text) #writes file rewrite data
+                file.close() #closes the file instance
                 await ctx.send("Removed "+str(user.name)+" from the Lapis Lord roster.")
             if(mode == "reset"):
                 file = open("Data/Global/Config/lapislord.cfg","w+")
