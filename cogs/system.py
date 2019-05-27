@@ -74,7 +74,7 @@ class System(commands.Cog):
                     process = subprocess.check_output(['git','status'],universal_newlines=True)
                     await ctx.send(process)
                 if(sys.platform == 'linux'):
-                    process = subprocess.check_output(shlex.split("""git status"""))
+                    process = subprocess.check_output(shlex.split("""git status"""),universal_newlines=True)
                     await ctx.send(process)
         else:
             await ctx.send("This is an owner only command.")
