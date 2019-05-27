@@ -46,23 +46,35 @@ class System(commands.Cog):
             await ctx.send("You do not have permission to use this command.")
 
     @commands.command()
-    async def branch(self,ctx,branch_name):
-        """ Changes the branch the bot operates on """
+    async def branch(self,ctx,mode,branch_name=None):
+        """ Modify the branch the bot operates on
+        
+            Modes:
+            - swap: changes branch to 'branch_name'
+            - status: show the output of 'git status' """
 
         if(ctx.author.id == core.vars.owner_id): #owner only command to change branches
-            if(sys.platform == 'win32'):
-                file = open("branch.temp","w+")
-                file.write(branch_name)
-                file.close()
-                subprocess.run(['start','py','branch.py'],shell=True)
-                await ctx.send("Windows: Rebooting for a branch change to '"+branch_name+"'!")
-                exit()
-            if(sys.platform == 'linux'):
-                file = open("branch.temp","w+")
-                file.write(branch_name)
-                subprocess.Popen(shlex.split("""x-terminal-emulator -e python3.7 branch.py"""), stdout=subprocess.PIPE)
-                await ctx.send("Linux: Rebooting for a branch change to '"+branch_name+"'!")
-                exit()
+            if(mode in ['swap','switch','change']):
+                if(sys.platform == 'win32'):
+                    file = open("branch.temp","w+")
+                    file.write(branch_name)
+                    file.close()
+                    subprocess.run(['start','py','branch.py'],shell=True)
+                    await ctx.send("Windows: Rebooting for a branch change to '"+branch_name+"'!")
+                    exit()
+                if(sys.platform == 'linux'):
+                    file = open("branch.temp","w+")
+                    file.write(branch_name)
+                    subprocess.Popen(shlex.split("""x-terminal-emulator -e python3.7 branch.py"""), stdout=subprocess.PIPE)
+                    await ctx.send("Linux: Rebooting for a branch change to '"+branch_name+"'!")
+                    exit()
+            if(mode in ['status']):
+                if(sys.platform == 'win32'):
+                    process = subprocess.check_output(['git','status'],universal_newlines=True)
+                    await ctx.send(process)
+                if(sys.platform == 'linux'):
+                    process = subprocess.Popen(shlex.split("""x-terminal-emulator -e git status"""), stdout=subprocess.PIPE)
+                    await ctx.send(process.output)
         else:
             await ctx.send("This is an owner only command.")
 
