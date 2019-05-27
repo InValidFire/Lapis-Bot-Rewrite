@@ -39,12 +39,32 @@ class System(commands.Cog):
                 await ctx.send("Windows: Rebooting for an update!")
                 exit()
             if(sys.platform == 'linux'): #handles updates on linux systems
-                process = subprocess.Popen(shlex.split("""x-terminal-emulator -e python3.7 update.py"""), stdout=subprocess.PIPE)
-                print(process.returncode)
+                subprocess.Popen(shlex.split("""x-terminal-emulator -e python3.7 update.py"""), stdout=subprocess.PIPE)
                 await ctx.send("Linux: Rebooting for an update!")
                 exit()
         else:
             await ctx.send("You do not have permission to use this command.")
+
+    @commands.command()
+    async def branch(self,ctx,branch_name):
+        """ Changes the branch the bot operates on """
+
+        if(ctx.author.id == core.vars.owner_id): #owner only command to change branches
+            if(sys.platform == 'win32'):
+                file = open("branch.temp","w+")
+                file.write(branch_name)
+                file.close()
+                subprocess.run(['start','py','branch.py'],shell=True)
+                await ctx.send("Windows: Rebooting for a branch change to '"+branch_name+"'!")
+                exit()
+            if(sys.platform == 'linux'):
+                file = open("branch.temp","w+")
+                file.write(branch_name)
+                subprocess.Popen(shlex.split("""x-terminal-emulator -e python3.7 branch.py"""), stdout=subprocess.PIPE)
+                await ctx.send("Linux: Rebooting for a branch change to '"+branch_name+"'!")
+                exit()
+        else:
+            await ctx.send("This is an owner only command.")
 
     @commands.command()
     async def id(self,ctx,user: discord.User=None):
