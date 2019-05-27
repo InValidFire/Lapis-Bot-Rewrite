@@ -32,12 +32,12 @@ class System(commands.Cog):
         #if(str(ctx.user.id) in file:
         if(self.lordcheck(ctx.author.id)==True): #Runs the lordcheck() function to see if the user has Lapis Lord permissions.
             if(sys.platform == 'win32'): #handles updates on windows systems
-                subprocess.run(['start','py','update.py'],shell=True)
                 await ctx.send("Windows: Rebooting for an update!")
-                exit()
+                subprocess.run(['start','py','update.py'],shell=True)
+                await ctx.bot.close()
             if(sys.platform == 'linux'): #handles updates on linux systems
-                subprocess.run(shlex.split("""python3.7 update.py &"""))
                 await ctx.send("Linux: Rebooting for an update!")
+                subprocess.run(shlex.split("""python3.7 update.py &"""))
                 await ctx.bot.close()
         else:
             await ctx.send("You do not have permission to use this command.")
@@ -46,12 +46,12 @@ class System(commands.Cog):
     async def restart(self,ctx):
         if(self.lordcheck(ctx.author.id)==True):
             if(sys.platform == 'win32'):
-                subprocess.run(['start','py','restart.py'],shell=True)
                 await ctx.send("Windows: Restarting bot!")
-                exit()
+                subprocess.run(['start','py','restart.py'],shell=True)
+                await ctx.bot.close()
             if(sys.platform == 'linux'):
-                subprocess.run(shlex.split("""python3.7 restart.py"""))
                 await ctx.send("Linux: Restarting bot!")
+                subprocess.run(shlex.split("""python3.7 restart.py"""))
                 await ctx.bot.close()
         else:
             await ctx.send("You do not have permission to use this command.")
@@ -70,15 +70,15 @@ class System(commands.Cog):
                     file = open("branch.temp","w+")
                     file.write(branch_name)
                     file.close()
-                    subprocess.run(['start','py','branch.py'],shell=True)
                     await ctx.send("Windows: Rebooting for a branch change to '"+branch_name+"'!")
-                    exit()
+                    subprocess.run(['start','py','branch.py'],shell=True)
+                    await ctx.bot.close()
                 if(sys.platform == 'linux'):
                     file = open("branch.temp","w+")
                     file.write(branch_name)
                     file.close()
-                    subprocess.run(shlex.split("""python3.7 branch.py &"""))
                     await ctx.send("Linux: Rebooting for a branch change to '"+branch_name+"'!")
+                    subprocess.run(shlex.split("""python3.7 branch.py &"""))
                     await ctx.bot.close()
             if(mode in ['status']):
                 if(sys.platform == 'win32'):
