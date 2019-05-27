@@ -66,7 +66,7 @@ class System(commands.Cog):
                     file = open("branch.temp","w+")
                     file.write(branch_name)
                     file.close()
-                    subprocess.Popen(shlex.split("""python3.7 branch.py &"""), stdout=subprocess.PIPE)
+                    subprocess.run(shlex.split("""python3.7 branch.py &"""))
                     await ctx.send("Linux: Rebooting for a branch change to '"+branch_name+"'!")
                     await ctx.bot.close()
             if(mode in ['status']):
