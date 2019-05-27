@@ -41,7 +41,7 @@ class System(commands.Cog):
             if(sys.platform == 'linux'): #handles updates on linux systems
                 subprocess.Popen(shlex.split("""python3.7 update.py &"""), stdout=subprocess.PIPE)
                 await ctx.send("Linux: Rebooting for an update!")
-                ctx.bot.close()
+                await ctx.bot.close()
         else:
             await ctx.send("You do not have permission to use this command.")
 
@@ -68,7 +68,7 @@ class System(commands.Cog):
                     file.close()
                     subprocess.Popen(shlex.split("""python3.7 branch.py &"""), stdout=subprocess.PIPE)
                     await ctx.send("Linux: Rebooting for a branch change to '"+branch_name+"'!")
-                    exit()
+                    await ctx.bot.close()
             if(mode in ['status']):
                 if(sys.platform == 'win32'):
                     process = subprocess.check_output(['git','status'],universal_newlines=True)
