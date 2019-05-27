@@ -25,8 +25,6 @@ except IOError:
 if __name__ == '__main__':
     for cog in cogs:
         bot.load_extension(cog)
-#move timer to its own classes in 'core' folder to be called before bot makes connection.
-#seems we don't get feedback from async/discord stuff... :c
 
 @bot.event
 async def on_ready():
@@ -34,6 +32,7 @@ async def on_ready():
     channel = bot.get_channel(core.vars.channel_testing)
     update = False
     branch = False
+    restart = False
     if(os.path.exists("branch_success.temp")):
         file = open("branch.temp","r")
         branch_name = file.read()
@@ -58,7 +57,11 @@ async def on_ready():
         await channel.send("Uh oh, something went wrong.\nCheck if you have any uncommitted changes.")
         os.remove("update_error.temp")
         update = True
-    if(core.vars.debug == False and update == False and branch == False):
+    if(os.path.exists("restart.temp")):
+        await channel.send("We're back!")
+        os.remove("restart.temp")
+        restart = True
+    if(core.vars.debug == False and update == False and branch == False and update == False):
         await channel.send("It's Lapis.")
 
 bot.run(os.environ['DISCORDBOTTOKEN'], reconnect=True)
