@@ -20,13 +20,8 @@ try:
         process = subprocess.Popen(shlex.split("""x-terminal-emulator -e python3.7 bot.py"""), stdout=subprocess.PIPE)
     print("Closing Branch Script")
     time.sleep(3)
-<<<<<<< Updated upstream
-    exit()
-except CalledProcessError:
-=======
     os._exit(0) #forces an exit, avoids triggering the except block
 except:
->>>>>>> Stashed changes
     errorfile = open("branch_error.temp","w+") #to be processed by the bot at boot if present.
     errorfile.close()
     print("Failed checkout to '"+branch_name+"', rebooting bot")

@@ -22,7 +22,7 @@ try:
 except:
     errorfile = open("update_error.temp","w+") #to be processed by the bot at boot if present.
     errorfile.close()
-    print("Failed checkout, rebooting bot")
+    print("Update failed, rebooting bot")
     time.sleep(2)
     if(sys.platform == 'win32'): #restarts bot on windows systems
         subprocess.run(['start','py','bot.py'],shell=True)
