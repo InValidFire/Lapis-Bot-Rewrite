@@ -6,8 +6,6 @@ import os
 
 print("Starting Update Script")
 try:
-    checkout = str(subprocess.check_output('git checkout master',shell=True))
-    print("Changed to master branch")
     subprocess.run('git pull',shell=True)
     print("Fetched code, making success note")
     successfile = open("update_success.temp","w+") #to be processed by the bot at boot if present.
