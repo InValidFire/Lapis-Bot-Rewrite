@@ -35,11 +35,11 @@ class System(commands.Cog):
         #if(str(ctx.user.id) in file:
         if(self.lordcheck(ctx.author.id)==True): #Runs the lordcheck() function to see if the user has Lapis Lord permissions.
             if(sys.platform == 'win32'): #handles updates on windows systems
-                subprocess.run(['start','py',dir+'\\update.py'],shell=True)
+                subprocess.run(['start','py','update.py'],shell=True)
                 await ctx.send("Windows: Rebooting for an update!")
                 exit()
             if(sys.platform == 'linux'): #handles updates on linux systems
-                subprocess.Popen(shlex.split("""x-terminal-emulator -e python3.7 update.py"""), stdout=subprocess.PIPE)
+                subprocess.Popen(shlex.split("""python3.7 update.py &"""), stdout=subprocess.PIPE)
                 await ctx.send("Linux: Rebooting for an update!")
                 exit()
         else:
@@ -66,7 +66,7 @@ class System(commands.Cog):
                     file = open("branch.temp","w+")
                     file.write(branch_name)
                     file.close()
-                    subprocess.Popen(shlex.split("""x-terminal-emulator -e python3.7 branch.py"""), stdout=subprocess.PIPE)
+                    subprocess.Popen(shlex.split("""python3.7 branch.py &"""), stdout=subprocess.PIPE)
                     await ctx.send("Linux: Rebooting for a branch change to '"+branch_name+"'!")
                     exit()
             if(mode in ['status']):
