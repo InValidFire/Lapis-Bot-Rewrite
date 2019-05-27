@@ -21,7 +21,7 @@ try:
     print("Closing Branch Script")
     time.sleep(3)
     exit()
-except:
+except CalledProcessError:
     errorfile = open("branch_error.temp","w+") #to be processed by the bot at boot if present.
     errorfile.close()
     print("Failed checkout to '"+branch_name+"', rebooting bot")

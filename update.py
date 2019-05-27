@@ -20,7 +20,7 @@ try:
     print("Closing Update Script")
     time.sleep(3)
     exit()
-except:
+except CalledProcessError:
     errorfile = open("update_error.temp","w+") #to be processed by the bot at boot if present.
     errorfile.close()
     print("Failed checkout, rebooting bot")
