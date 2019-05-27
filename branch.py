@@ -17,7 +17,7 @@ try:
     if(sys.platform == 'win32'): #restarts bot on windows systems
         subprocess.run(['start','py','bot.py'],shell=True)
     if(sys.platform == 'linux'): #restarts bot on linux systems
-        process = subprocess.Popen(shlex.split("""python3.7 bot.py &"""))
+        process = subprocess.run(shlex.split("""python3.7 bot.py &"""))
     print("Closing Branch Script")
     time.sleep(3)
     #os._exit(0) #forces an exit, avoids triggering the except block
@@ -28,7 +28,7 @@ except:
     if(sys.platform == 'win32'): #restarts bot on windows systems
         subprocess.run(['start','py','bot.py'],shell=True)
     if(sys.platform == 'linux'): #restarts bot on linux systems
-        process = subprocess.Popen(shlex.split("""python3.7 bot.py &""")) #same command pulled from update.py
+        process = subprocess.run(shlex.split("""python3.7 bot.py &""")) #same command pulled from update.py
     print("Closing Branch Script")
     time.sleep(3)
     #exit()
