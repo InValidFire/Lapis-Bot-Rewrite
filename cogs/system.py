@@ -1,7 +1,6 @@
 from discord.ext import tasks, commands
 import discord
 import subprocess
-import os
 import sys
 import shlex
 import core.vars
@@ -30,8 +29,6 @@ class System(commands.Cog):
     async def update(self,ctx):
         """ Updates the bot's code to math the Github's master branch [Lapis Lord only] """
 
-        #look into the specifics of ctx works in the discord.py documentation later, appears to get the context of the command, but what does that include
-        dir = os.getcwd()
         #if(str(ctx.user.id) in file:
         if(self.lordcheck(ctx.author.id)==True): #Runs the lordcheck() function to see if the user has Lapis Lord permissions.
             if(sys.platform == 'win32'): #handles updates on windows systems
@@ -39,8 +36,22 @@ class System(commands.Cog):
                 await ctx.send("Windows: Rebooting for an update!")
                 exit()
             if(sys.platform == 'linux'): #handles updates on linux systems
-                subprocess.Popen(shlex.split("""python3.7 update.py &"""), stdout=subprocess.PIPE)
+                subprocess.run(shlex.split("""python3.7 update.py &"""))
                 await ctx.send("Linux: Rebooting for an update!")
+                await ctx.bot.close()
+        else:
+            await ctx.send("You do not have permission to use this command.")
+
+    @commands.command()
+    async def restart(self,ctx):
+        if(self.lordcheck(ctx.author.id)==True):
+            if(sys.platform == 'win32'):
+                subprocess.run(['start','py','restart.py'],shell=True)
+                await ctx.send("Windows: Restarting bot!")
+                exit()
+            if(sys.platform == 'linux'):
+                subprocess.run(shlex.split("""python3.7 restart.py"""))
+                await ctx.send("Linux: Restarting bot!")
                 await ctx.bot.close()
         else:
             await ctx.send("You do not have permission to use this command.")
