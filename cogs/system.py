@@ -1,7 +1,6 @@
 from discord.ext import tasks, commands
 import discord
 import subprocess
-import os
 import sys
 import shlex
 import core.vars
@@ -30,39 +29,76 @@ class System(commands.Cog):
     async def update(self,ctx):
         """ Updates the bot's code to math the Github's master branch [Lapis Lord only] """
 
-        #look into the specifics of ctx works in the discord.py documentation later, appears to get the context of the command, but what does that include
-        dir = os.getcwd()
         #if(str(ctx.user.id) in file:
         if(self.lordcheck(ctx.author.id)==True): #Runs the lordcheck() function to see if the user has Lapis Lord permissions.
             if(sys.platform == 'win32'): #handles updates on windows systems
-                subprocess.run(['start','py',dir+'\\update.py'],shell=True)
                 await ctx.send("Windows: Rebooting for an update!")
-                exit()
+                subprocess.run(['start','py','update.py'],shell=True)
+                await ctx.bot.close()
             if(sys.platform == 'linux'): #handles updates on linux systems
-                subprocess.Popen(shlex.split("""x-terminal-emulator -e python3.7 update.py"""), stdout=subprocess.PIPE)
                 await ctx.send("Linux: Rebooting for an update!")
-                exit()
+                subprocess.run(shlex.split("""python3.7 update.py &"""))
+                await ctx.bot.close()
         else:
             await ctx.send("You do not have permission to use this command.")
 
     @commands.command()
-    async def branch(self,ctx,branch_name):
-        """ Changes the branch the bot operates on """
+    async def restart(self,ctx):
+        if(self.lordcheck(ctx.author.id)==True):
+            if(sys.platform == 'win32'):
+                await ctx.send("Windows: Restarting bot!")
+                subprocess.run(['start','py','restart.py'],shell=True)
+                await ctx.bot.close()
+            if(sys.platform == 'linux'):
+                await ctx.send("Linux: Restarting bot!")
+                subprocess.run(shlex.split("""python3.7 restart.py"""))
+                await ctx.bot.close()
+        else:
+            await ctx.send("You do not have permission to use this command.")
+
+    @commands.command()
+    async def restartpi(self,ctx):
+        if(self.lordcheck(ctx.author.id)==True):
+            if(sys.platform == 'linux'):
+                await ctx.send("Linux: Restarting Raspberry Pi!")
+                subprocess.run(shlex.split("""python3.7 restartpi.py"""))
+                await ctx.bot.close()
+            else:
+                await ctx.send("This is a Linux only command.")
+        else:
+            await ctx.send("You do not have permission to use this command.")
+
+    @commands.command()
+    async def branch(self,ctx,mode,branch_name=None):
+        """ Modify the branch the bot operates on
+
+            Modes:
+            - swap: changes branch to 'branch_name'
+            - status: show the output of 'git status' """
 
         if(ctx.author.id == core.vars.owner_id): #owner only command to change branches
-            if(sys.platform == 'win32'):
-                file = open("branch.temp","w+")
-                file.write(branch_name)
-                file.close()
-                subprocess.run(['start','py','branch.py'],shell=True)
-                await ctx.send("Windows: Rebooting for a branch change to '"+branch_name+"'!")
-                exit()
-            if(sys.platform == 'linux'):
-                file = open("branch.temp","w+")
-                file.write(branch_name)
-                subprocess.Popen(shlex.split("""x-terminal-emulator -e python3.7 branch.py"""), stdout=subprocess.PIPE)
-                await ctx.send("Linux: Rebooting for a branch change to '"+branch_name+"'!")
-                exit()
+            if(mode in ['swap','switch','change']):
+                if(sys.platform == 'win32'):
+                    file = open("branch.temp","w+")
+                    file.write(branch_name)
+                    file.close()
+                    await ctx.send("Windows: Rebooting for a branch change to '"+branch_name+"'!")
+                    subprocess.run(['start','py','branch.py'],shell=True)
+                    await ctx.bot.close()
+                if(sys.platform == 'linux'):
+                    file = open("branch.temp","w+")
+                    file.write(branch_name)
+                    file.close()
+                    await ctx.send("Linux: Rebooting for a branch change to '"+branch_name+"'!")
+                    subprocess.run(shlex.split("""python3.7 branch.py &"""))
+                    await ctx.bot.close()
+            if(mode in ['status']):
+                if(sys.platform == 'win32'):
+                    process = subprocess.check_output(['git','status'],universal_newlines=True)
+                    await ctx.send(process)
+                if(sys.platform == 'linux'):
+                    process = subprocess.check_output(shlex.split("""git status"""),universal_newlines=True)
+                    await ctx.send(process)
         else:
             await ctx.send("This is an owner only command.")
 

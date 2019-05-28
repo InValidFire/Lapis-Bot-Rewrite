@@ -2,7 +2,6 @@ import subprocess
 import time
 import sys
 import shlex
-import os
 
 print("Starting Branch Script")
 file = open("branch.temp","r")
@@ -17,10 +16,10 @@ try:
     if(sys.platform == 'win32'): #restarts bot on windows systems
         subprocess.run(['start','py','bot.py'],shell=True)
     if(sys.platform == 'linux'): #restarts bot on linux systems
-        process = subprocess.Popen(shlex.split("""x-terminal-emulator -e python3.7 bot.py"""), stdout=subprocess.PIPE)
+        process = subprocess.run(shlex.split("""python3.7 bot.py &"""))
     print("Closing Branch Script")
     time.sleep(3)
-    os._exit(0) #forces an exit, avoids triggering the except block
+    sys.exit()
 except:
     errorfile = open("branch_error.temp","w+") #to be processed by the bot at boot if present.
     errorfile.close()
@@ -28,7 +27,7 @@ except:
     if(sys.platform == 'win32'): #restarts bot on windows systems
         subprocess.run(['start','py','bot.py'],shell=True)
     if(sys.platform == 'linux'): #restarts bot on linux systems
-        process = subprocess.Popen(shlex.split("""x-terminal-emulator -e python3.7 bot.py"""), stdout=subprocess.PIPE) #same command pulled from update.py
+        process = subprocess.run(shlex.split("""python3.7 bot.py &""")) #same command pulled from update.py
     print("Closing Branch Script")
     time.sleep(3)
-    exit()
+    sys.exit()
