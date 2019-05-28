@@ -74,7 +74,8 @@ class System(commands.Cog):
 
             Modes:
             - swap: changes branch to 'branch_name'
-            - status: show the output of 'git status' """
+            - status: show the output of 'git status'
+            - version: shows the latest commit message """
 
         if(ctx.author.id == core.vars.owner_id): #owner only command to change branches
             if(mode in ['swap','switch','change']):
@@ -98,6 +99,13 @@ class System(commands.Cog):
                     await ctx.send(process)
                 if(sys.platform == 'linux'):
                     process = subprocess.check_output(shlex.split("""git status"""),universal_newlines=True)
+                    await ctx.send(process)
+            if(mode in ['version']):
+                if(sys.platform == 'win32'):
+                    process = subprocess.check_output(['git','log','-1'],universal_newlines=True)
+                    await ctx.send(process)
+                if(sys.platform == 'linux'):
+                    process = subprocess.check_output(schlex.split("""git log -1"""), universal_newlines=True)
                     await ctx.send(process)
         else:
             await ctx.send("This is an owner only command.")
