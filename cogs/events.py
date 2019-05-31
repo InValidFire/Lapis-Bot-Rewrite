@@ -2,6 +2,17 @@ from discord.ext import tasks, commands
 import time
 import core.vars
 
+# TODO:
+# Add date specific Events
+#    - These don't reoccur.
+# Give each event an id
+#    - Start a variable at 0, add one for each new event and never go backwards.
+#    - Global variable, individual servers don't start at 0, all servers share it.
+# Make events server-specific
+#    - Requires rework of setup()
+#    - Might as well just remove saveload() needs a complete rewrite, and changing setup() would break it.
+# Add commands for adding/removing events based on the Event ID
+
 class Events(commands.Cog):
     i = 0 #gives each event a number, helping us identify it in the console (only shows up if debug is true)
     b = 0 #prevents bot from spamming messages, helps bot know when it's sent the announcement message
