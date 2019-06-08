@@ -31,10 +31,10 @@ class Events(commands.Cog):
 
     def eventsload(self):
         try:
-            file = open(os.getcwd()+"\\Data\\Global\\Config\\eventid.cfg","r+") #opens eventid.cfg
+            file = open(os.getcwd()+"/Data/Global/Config/eventid.cfg","r+") #opens eventid.cfg
             self.id = file.read() #loads latest event id
             file.close()
-            file = open(os.getcwd()+"\\Data\\Global\\Config\\events.cfg","r+") #opens events.cfg
+            file = open(os.getcwd()+"/Data/Global/Config/events.cfg","r+") #opens events.cfg
             self.eventdata = []
             for line in file:
                 self.eventdata.append(line.rstrip("\n")) #adds each line to the eventdata list
@@ -99,19 +99,19 @@ class Events(commands.Cog):
             if(timedate == None):
                 timedate = core.vars.currentdaytime
             if(type == "weekly"):
-                file = open(os.getcwd()+"\\Data\\Global\\Config\\eventid.cfg","r") #loads latest event id
+                file = open(os.getcwd()+"/Data/Global/Config/eventid.cfg","r") #loads latest event id
                 self.id = int(file.read())
                 file.close()
-                file = open(os.getcwd()+"\\Data\\Global\\Config\\eventid.cfg","w+") #increases event id by 1
+                file = open(os.getcwd()+"/Data/Global/Config/eventid.cfg","w+") #increases event id by 1
                 self.id = str(self.id+1)
                 file.write(self.id)
                 file.close()
-                file = open(os.getcwd()+"\\Data\\Global\\Config\\events.cfg","r+") #loads events.cfg
+                file = open(os.getcwd()+"/Data/Global/Config/events.cfg","r+") #loads events.cfg
                 text = ""
                 for line in file:
                     text = text + line
                 file.close()
-                file = open(os.getcwd()+"\\Data\\Global\\Config\\events.cfg","w+") #fix this redundancy, I did this because opening a file in r+ without moving the cursor overwrites
+                file = open(os.getcwd()+"/Data/Global/Config/events.cfg","w+") #fix this redundancy, I did this because opening a file in r+ without moving the cursor overwrites
                 text = text + (self.id+" - "+timedate+" - "+type+" - "+message+"\n") #need to figure out how to move that thing.
                 file.write(text)
                 file.close()
@@ -134,13 +134,13 @@ class Events(commands.Cog):
     async def eventremove(self,ctx,id):
         """Removes an event and reloads the events [LL Only]"""
         if(cogs.system.System.lordcheck(self,ctx.author.id) == True): #loads events if the ID doesn't match into a newfile
-            file = open(os.getcwd()+"\\Data\\Global\\Config\\events.cfg","r+")
+            file = open(os.getcwd()+"/Data/Global/Config/events.cfg","r+")
             newfile = ""
             for line in file:
                 if(line.startswith(id) == False):
                     newfile = newfile + line
             file.close()
-            file = open(os.getcwd()+"\\Data\\Global\\Config\\events.cfg","w+") #saves that new file
+            file = open(os.getcwd()+"/Data/Global/Config/events.cfg","w+") #saves that new file
             file.write(newfile)
             file.close()
             self.eventsload()
