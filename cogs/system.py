@@ -5,6 +5,10 @@ import sys
 import shlex
 import core.vars
 
+#TODO:
+# Add +shutdown command, should be simple.
+# Add a +time command, shows the time variables.
+
 class System(commands.Cog):
     debug = False
 
@@ -112,6 +116,12 @@ class System(commands.Cog):
             await ctx.send("This is an owner only command.")
 
     @commands.command()
+    async def sid(self,ctx):
+        """Gets the server id"""
+        if(self.lordcheck(ctx.author.id)==True):
+            await ctx.send("Server ID: "+str(ctx.message.guild.id))
+
+    @commands.command()
     async def id(self,ctx,user: discord.User=None):
         """Gets ID of mentioned user"""
         if(self.lordcheck(ctx.author.id)==True):
@@ -167,10 +177,10 @@ class System(commands.Cog):
                 for line in file:
                     s = line
                     s = s.replace(str(user.id)+"\n","") #removes all instances the user.id shows up
-                    text = text + s # adds whatever's left to the rewrite
+                    text = text + s # adds whatever's left to the rewrite variable
                 file.close()
                 file = open("Data/Global/Config/lapislord.cfg","w+") #resets the lapislord.cfg file
-                file.write(text) #writes file rewrite data
+                file.write(text) #writes file rewrite variable
                 file.close() #closes the file instance
                 await ctx.send("Removed "+str(user.name)+" from the Lapis Lord roster.")
             if(mode == "reset"):
