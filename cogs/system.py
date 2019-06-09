@@ -61,6 +61,15 @@ class System(commands.Cog):
             await ctx.send("You do not have permission to use this command.")
 
     @commands.command()
+    async def shutdown(self,ctx):
+        """Closes the bot"""
+        if(ctx.author.id == core.vars.owner_id):
+            await ctx.send("Shutting down the bot.")
+            ctx.bot.close()
+        else:
+            await ctx.send("Really? Thought you could just off me like that... rude.")
+
+    @commands.command()
     async def restartpi(self,ctx):
         if(self.lordcheck(ctx.author.id)==True):
             if(sys.platform == 'linux'):
