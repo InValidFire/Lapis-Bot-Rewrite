@@ -70,7 +70,7 @@ class Math(commands.Cog):
         """ Converts given Overworld coordinates to Nether coordinates """
         xcoord = float(xcoord)
         zcoord = float(zcoord)
-        await ctx.send("Nether Coords:\nX: {x:.2f}\nZ: {z:.2f}".format(x=xcoord/8,z=zcoord/8))
+        await ctx.send("Nether Coords:\nX: {x:.0f}\nZ: {z:.0f}".format(x=xcoord/8,z=zcoord/8))
         if(self.debug == True and core.vars.debug == True):
             print("Converted Overworld coords to Nether coords")
 def setup(bot):

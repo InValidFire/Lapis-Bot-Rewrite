@@ -6,7 +6,7 @@ import pytz
 
 class TimeZones(commands.Cog):
     debug = False
-    
+
     def __init__(self,bot):
         print("TimeZones: Initialized")
         self.bot = bot
@@ -14,6 +14,9 @@ class TimeZones(commands.Cog):
     @commands.command()
     async def time(self,ctx,timezone):
         """Query the time in a certain timezone."""
+        for tz in pytz.all_timezones: #makes it case-insensitive
+            if(timezone.lower() == tz.lower()):
+                timezone = tz
         response = SimpleDate(tz=timezone,unsafe=True)
         format = str(response.convert(format='A, I:M p'))
         await ctx.send(timezone+" - "+format)
@@ -23,8 +26,10 @@ class TimeZones(commands.Cog):
         """Search for timezones with the given term"""
         if(search == None):
             await ctx.send("Please specify a search term.")
+        search = search.lower()
         for tz in pytz.all_timezones:
-            if(tz.find(search)>=0):
+            ttz = tz.lower()
+            if(ttz.find(search)>=0):
                 await ctx.send(tz)
         await ctx.send("Search complete!")
 

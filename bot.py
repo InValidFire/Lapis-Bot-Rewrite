@@ -7,7 +7,7 @@ import core.vars
 logging.basicConfig(level=logging.ERROR)
 
 bot = commands.Bot(command_prefix='+', description='Various things Valdrea needs')
-cogs = ['cogs.timer', 'cogs.events', 'cogs.math', 'cogs.system','cogs.data','cogs.timezones']
+cogs = ['cogs.timer', 'cogs.events', 'cogs.math', 'cogs.system','cogs.data','cogs.timezones','cogs.wiki']
 dir = os.getcwd()
 
 if __name__ == '__main__':
@@ -18,7 +18,7 @@ if __name__ == '__main__':
 async def on_ready():
     print("Logged in as {0.user}".format(bot))
     channel = bot.get_channel(core.vars.channel_testing)
-    update = False
+    update = False #startup message control variables
     branch = False
     restart = False
     if(os.path.exists("branch_success.temp")):
