@@ -14,7 +14,7 @@ class Wiki(commands.Cog):
     async def wiki(self,ctx,*args):
         """Search the Minecraft Wiki."""
         with urlopen("https://minecraft.gamepedia.com/Special:Search/{}".format('_'.join(args))) as page:
-            await ctx.send(str(page.geturl()))
+                    await ctx.send(str(page.urlget()))
 
 def setup(bot):
     bot.add_cog(Wiki(bot))
