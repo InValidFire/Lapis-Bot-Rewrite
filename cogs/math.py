@@ -5,12 +5,12 @@ import math
 
 class Math(commands.Cog):
     debug = True
-    decimal = 0
+    decimal = 0 #controls our moving decimal system
 
     def __init__(self, bot):
         print("Math: Initialized")
         self.bot = bot
-        self.decimal = 2
+        self.decimal = 2 
 
     def cog_unload(self):
         self.temp.cancel()
@@ -19,7 +19,7 @@ class Math(commands.Cog):
     async def decimal(self, ctx, number):
         """ Change the decimal place the math functions round to """
         self.decimal = int(number)
-        await ctx.send("Decimal rounding is set to {zero:.{deci}f}".format(zero=0,deci=self.decimal))
+        await ctx.send("Decimal rounding is set to {zero:.{deci}f}".format(zero=0,deci=self.decimal)) #formatting the formatting string hehe.
 
     @commands.command(aliases=['deg','temp','temperature'])
     async def degree(self, ctx, temperature, scale):
@@ -49,7 +49,6 @@ class Math(commands.Cog):
     @commands.command(aliases=['add'])
     async def addition(self,ctx,num1,num2):
         """ Adds two numbers """
-        print(self.decimal)
         await ctx.send(str(round(float(num1)+float(num2),self.decimal)))
         if(self.debug == True and core.vars.debug == True):
             print("Math: Added {} and {}".format(num1,num2))
