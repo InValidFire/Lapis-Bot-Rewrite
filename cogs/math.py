@@ -5,13 +5,21 @@ import math
 
 class Math(commands.Cog):
     debug = True
+    decimal = 0
 
     def __init__(self, bot):
         print("Math: Initialized")
         self.bot = bot
+        self.decimal = 2
 
     def cog_unload(self):
         self.temp.cancel()
+
+    @commands.command()
+    async def decimal(self, ctx, number):
+        """ Change the decimal place the math functions round to """
+        self.decimal = int(number)
+        await ctx.send("Decimal rounding is set to {zero:.{deci}f}".format(zero=0,deci=self.decimal))
 
     @commands.command(aliases=['deg','temp','temperature'])
     async def degree(self, ctx, temperature, scale):
@@ -40,29 +48,30 @@ class Math(commands.Cog):
 
     @commands.command(aliases=['add'])
     async def addition(self,ctx,num1,num2):
-        """ Adds two numbers together """
-        await ctx.send(str(float(num1)+float(num2)))
+        """ Adds two numbers """
+        print(self.decimal)
+        await ctx.send(str(round(float(num1)+float(num2),self.decimal)))
         if(self.debug == True and core.vars.debug == True):
             print("Math: Added {} and {}".format(num1,num2))
 
     @commands.command(aliases=['sub'])
     async def subtract(self,ctx,num1,num2):
         """ Subtracts two numbers """
-        await ctx.send(str(float(num1)-float(num2)))
+        await ctx.send(str(round(float(num1)-float(num2),self.decimal)))
         if(self.debug == True and core.vars.debug == True):
             print("Math: Subtracted {} and {}".format(num1,num2))
 
     @commands.command(aliases=['times'])
     async def multiply(self,ctx,num1,num2):
         """ Multiplies two numbers """
-        await ctx.send(str(float(num1)*float(num2)))
+        await ctx.send(str(round(float(num1)*float(num2),self.decimal)))
         if(self.debug == True and core.vars.debug == True):
             print("Math: Multiplied {} and {}".format(num1,num2))
 
     @commands.command(aliases=['div'])
     async def divide(self,ctx,num1,num2):
         """ Divides two numbers """
-        await ctx.send(str(float(num1)/float(num2)))
+        await ctx.send(str(round(float(num1)/float(num2),self.decimal)))
         if(self.debug == True and core.vars.debug == True):
             print("Math: Divided {} and {}".format(num1,num2))
 
@@ -81,7 +90,7 @@ class Math(commands.Cog):
         +/-8 block range"""
         xcoord = float(xcoord)
         zcoord = float(zcoord)
-        await ctx.send("Overworld Coords:\nX: {x:.0f}\nZ: {z:.0f}".format(x=math.floor(xcoord*8),z=math.floor(zcoord*8)))
+        await ctx.send("Overworld Coords:\nX: {x:.0f} to {s:.0f}\nZ: {z:.0f} to {a:.0f}".format(x=math.floor(xcoord*8),s=math.floor((xcoord+1)*8-1),z=math.floor(zcoord*8),a=math.floor((zcoord+1)*8-1)))
         if(self.debug == True and core.vars.debug == True):
             print("Converted Nether coords to Overworld coords")
 
