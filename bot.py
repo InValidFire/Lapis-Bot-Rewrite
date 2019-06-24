@@ -2,25 +2,13 @@ import discord
 from discord.ext import commands, tasks
 import logging
 import os
-import core.setup
-import core.saveload
 import core.vars
 
 logging.basicConfig(level=logging.ERROR)
 
 bot = commands.Bot(command_prefix='+', description='Various things Valdrea needs')
-cogs = ['cogs.timer', 'cogs.events', 'cogs.math', 'cogs.system']
-gsl = core.saveload.Global() #Global saving/loading class
-gset = core.setup.Global() #Global setup class
+cogs = ['cogs.timer', 'cogs.events', 'cogs.math', 'cogs.system','cogs.data','cogs.timezones','cogs.wiki']
 dir = os.getcwd()
-
-try:
-    gsl.load()
-    gsl.eventload()
-except IOError:
-    gset.setup()
-    gsl.load()
-    gsl.eventload()
 
 if __name__ == '__main__':
     for cog in cogs:
@@ -30,7 +18,7 @@ if __name__ == '__main__':
 async def on_ready():
     print("Logged in as {0.user}".format(bot))
     channel = bot.get_channel(core.vars.channel_testing)
-    update = False
+    update = False #startup message control variables
     branch = False
     restart = False
     if(os.path.exists("branch_success.temp")):

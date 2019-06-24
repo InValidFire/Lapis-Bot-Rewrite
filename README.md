@@ -8,12 +8,15 @@ This bot aids us on our server Valdrea doing whatever we need it to, if you want
 * Scheduled Event Announcements (WIP)
   * Send announcements at a specific time (Done)
   * Allow for custom event messages (Done)
-  * Command for adding/removing events from Discord (WIP)
-  * Command to reload the events.cfg file without a reboot (WIP)
+  * Command for adding/removing events from Discord (Done)
+  * Command to reload the events.cfg file without a reboot (Done)
 * Convert Overworld coordinates to Nether coordinates
 * Convert temperature units
+* Check the time in specific timezones
 * Various Math functions
 * Easily update bot with the github repository from inside Discord.
+* Lapis Lord permission system
+  * only people designated as Lapis Lords can run administrative commands
 ___
 ### Planned Additions
 * Server activity tracking
@@ -37,12 +40,6 @@ ___
   * Add `+info` command that shows pi info, such as the uptime, the IP address, and CPU usage [Owner only command]
   * Add `+branch` command allowing us to switch the loaded branch
   * Add `+github` command that links to the Github repository.
-  * Change Lapis Lord system:
-    * Add `+lapislord` command [Owner only command]
-      * Modes:
-        * `list`: Default, lists all Lapis Lords
-        * `add`: Adds a user to the Lapis Lords list
-        * `remove`: Removes a user from the Lapis Lords list (cannot remove Owner)
 ___
 ### Current Priorities
 * `cogs.system` commands completed

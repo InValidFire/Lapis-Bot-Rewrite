@@ -5,6 +5,10 @@ import sys
 import shlex
 import core.vars
 
+#TODO:
+# Add +shutdown command, should be simple.
+# Add a +time command, shows the time variables.
+
 class System(commands.Cog):
     debug = False
 
@@ -57,6 +61,15 @@ class System(commands.Cog):
             await ctx.send("You do not have permission to use this command.")
 
     @commands.command()
+    async def shutdown(self,ctx):
+        """Closes the bot"""
+        if(ctx.author.id == core.vars.owner_id):
+            await ctx.send("Shutting down the bot.")
+            ctx.bot.close()
+        else:
+            await ctx.send("Really? Thought you could just off me like that... rude.")
+
+    @commands.command()
     async def restartpi(self,ctx):
         if(self.lordcheck(ctx.author.id)==True):
             if(sys.platform == 'linux'):
@@ -74,24 +87,26 @@ class System(commands.Cog):
 
             Modes:
             - swap: changes branch to 'branch_name'
-            - status: show the output of 'git status' """
+            - status: show the output of 'git status'
+            - version: shows the latest commit message """
 
-        if(ctx.author.id == core.vars.owner_id): #owner only command to change branches
+        if(self.lordcheck(ctx.author.id)==True):
             if(mode in ['swap','switch','change']):
-                if(sys.platform == 'win32'):
-                    file = open("branch.temp","w+")
-                    file.write(branch_name)
-                    file.close()
-                    await ctx.send("Windows: Rebooting for a branch change to '"+branch_name+"'!")
-                    subprocess.run(['start','py','branch.py'],shell=True)
-                    await ctx.bot.close()
-                if(sys.platform == 'linux'):
-                    file = open("branch.temp","w+")
-                    file.write(branch_name)
-                    file.close()
-                    await ctx.send("Linux: Rebooting for a branch change to '"+branch_name+"'!")
-                    subprocess.run(shlex.split("""python3.7 branch.py &"""))
-                    await ctx.bot.close()
+                if(ctx.author.id == core.vars.owner_id):
+                    if(sys.platform == 'win32'):
+                        file = open("branch.temp","w+")
+                        file.write(branch_name)
+                        file.close()
+                        await ctx.send("Windows: Rebooting for a branch change to '"+branch_name+"'!")
+                        subprocess.run(['start','py','branch.py'],shell=True)
+                        await ctx.bot.close()
+                    if(sys.platform == 'linux'):
+                        file = open("branch.temp","w+")
+                        file.write(branch_name)
+                        file.close()
+                        await ctx.send("Linux: Rebooting for a branch change to '"+branch_name+"'!")
+                        subprocess.run(shlex.split("""python3.7 branch.py &"""))
+                        await ctx.bot.close()
             if(mode in ['status']):
                 if(sys.platform == 'win32'):
                     process = subprocess.check_output(['git','status'],universal_newlines=True)
@@ -99,8 +114,21 @@ class System(commands.Cog):
                 if(sys.platform == 'linux'):
                     process = subprocess.check_output(shlex.split("""git status"""),universal_newlines=True)
                     await ctx.send(process)
+            if(mode in ['version']):
+                if(sys.platform == 'win32'):
+                    process = subprocess.check_output(['git','log','-1'],universal_newlines=True)
+                    await ctx.send(process)
+                if(sys.platform == 'linux'):
+                    process = subprocess.check_output(shlex.split("""git log -1"""), universal_newlines=True)
+                    await ctx.send(process)
         else:
             await ctx.send("This is an owner only command.")
+
+    @commands.command()
+    async def sid(self,ctx):
+        """Gets the server id"""
+        if(self.lordcheck(ctx.author.id)==True):
+            await ctx.send("Server ID: "+str(ctx.message.guild.id))
 
     @commands.command()
     async def id(self,ctx,user: discord.User=None):
@@ -122,7 +150,14 @@ class System(commands.Cog):
 
     @commands.command()
     async def lapislord(self,ctx,mode,user: discord.User=None): # Owner only command that allows me to trust users with certain commands
-        """ Manage Lapis Lords [Owner Only]"""
+        """ Manage Lapis Lords [Owner Only]
+
+        Modes:
+        - list: lists all Lapis Lords
+        - add: adds a user to the Lapis Lord roster
+        - remove: removes a user from the Lapis Lord roster
+        - reset: resets the Lapis Lord Roster
+        """
         if(ctx.author.id == core.vars.owner_id):
             if(mode == "add"):
                 with open("Data/Global/Config/lapislord.cfg","a+") as file:
@@ -151,10 +186,10 @@ class System(commands.Cog):
                 for line in file:
                     s = line
                     s = s.replace(str(user.id)+"\n","") #removes all instances the user.id shows up
-                    text = text + s # adds whatever's left to the rewrite
+                    text = text + s # adds whatever's left to the rewrite variable
                 file.close()
                 file = open("Data/Global/Config/lapislord.cfg","w+") #resets the lapislord.cfg file
-                file.write(text) #writes file rewrite data
+                file.write(text) #writes file rewrite variable
                 file.close() #closes the file instance
                 await ctx.send("Removed "+str(user.name)+" from the Lapis Lord roster.")
             if(mode == "reset"):
@@ -162,6 +197,11 @@ class System(commands.Cog):
                 await ctx.send("Reset the lapislord.cfg")
         if(ctx.message.author.id != core.vars.owner_id):
             await ctx.send("This is an owner only command.")
+
+    @commands.command()
+    async def github(self,ctx):
+        """Gets link to the bot repository"""
+        await ctx.send("Here's a link to my code:\n<https://github.com/InValidFire/Lapis-Bot-Rewrite>")
 
 def setup(bot):
     bot.add_cog(System(bot))

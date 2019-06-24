@@ -18,13 +18,18 @@ class Timer(commands.Cog):
 
     @tasks.loop(seconds=1)
     async def timer(self):
-        currentdays=time.strftime("%A")
+        currentdaynum = time.strftime("%d")
+        currentmonthnum = time.strftime("%m")
+        currentyearnum = time.strftime("%y")
+        currentday=time.strftime("%A")
         currenthour=time.strftime("%H")
         currentmins=time.strftime("%M")
-        core.vars.currentdate = currentdays+", "+currenthour+":"+currentmins
+        core.vars.currentdaytime = currentday+"-"+currenthour+":"+currentmins
         core.vars.currenttime = currenthour+":"+currentmins
+        core.vars.currentdate = currentmonthnum+"/"+currentdaynum+"/"+currentyearnum
         if(self.debug == True and core.vars.debug == True):
-            print("Timer: Currentdate - "+core.vars.currentdate)
-            print("Timer: Currenttime - "+core.vars.currenttime)
+            print("Timer: currentdaytime - "+core.vars.currentdaytime)
+            print("       currenttime - "+core.vars.currenttime)
+            print("       currentdate - "+core.vars.currentdate)
 def setup(bot):
     bot.add_cog(Timer(bot))
