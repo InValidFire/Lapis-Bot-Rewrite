@@ -10,7 +10,7 @@ class Math(commands.Cog):
     def __init__(self, bot):
         print("Math: Initialized")
         self.bot = bot
-        self.decimal = 2 
+        self.decimal = 2
 
     def cog_unload(self):
         self.temp.cancel()
@@ -73,25 +73,6 @@ class Math(commands.Cog):
         await ctx.send(str(round(float(num1)/float(num2),self.decimal)))
         if(self.debug == True and core.vars.debug == True):
             print("Math: Divided {} and {}".format(num1,num2))
-
-    @commands.command(aliases=['portal'])
-    async def nether(self,ctx,xcoord,zcoord):
-        """ Converts given Overworld coordinates to Nether coordinates """
-        xcoord = float(xcoord)
-        zcoord = float(zcoord)
-        await ctx.send("Nether Coords:\nX: {x:.0f}\nZ: {z:.0f}".format(x=math.floor(xcoord/8),z=math.floor(zcoord/8)))
-        if(self.debug == True and core.vars.debug == True):
-            print("Converted Overworld coords to Nether coords")
-
-    @commands.command()
-    async def overworld(self,ctx,xcoord,zcoord):
-        """ Converts given Nether coordinates to Overworld coordinates
-        +/-8 block range"""
-        xcoord = float(xcoord)
-        zcoord = float(zcoord)
-        await ctx.send("Overworld Coords:\nX: {x:.0f} to {s:.0f}\nZ: {z:.0f} to {a:.0f}".format(x=math.floor(xcoord*8),s=math.floor((xcoord+1)*8-1),z=math.floor(zcoord*8),a=math.floor((zcoord+1)*8-1)))
-        if(self.debug == True and core.vars.debug == True):
-            print("Converted Nether coords to Overworld coords")
 
 def setup(bot):
     bot.add_cog(Math(bot))
