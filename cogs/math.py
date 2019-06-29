@@ -3,6 +3,22 @@ from discord.ext import tasks, commands
 import core.vars
 import math
 
+def nether(x,z):
+    x=math.floor(int(x)/8)
+    z=math.floor(int(z)/8)
+    d = dict()
+    d['x'] = x
+    d['z'] = z
+    return d
+
+def overworld(x,z):
+    x=math.floor(int(x)*8)
+    z=math.floor(int(z)*8)
+    d = dict()
+    d['x'] = x
+    d['z'] = z
+    return d
+    
 class Math(commands.Cog):
     debug = True
     decimal = 0 #controls our moving decimal system
@@ -11,9 +27,6 @@ class Math(commands.Cog):
         print("Math: Initialized")
         self.bot = bot
         self.decimal = 2
-
-    def cog_unload(self):
-        self.temp.cancel()
 
     @commands.command()
     async def decimal(self, ctx, number):

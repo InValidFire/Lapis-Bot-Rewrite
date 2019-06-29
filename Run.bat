@@ -1,2 +1,2 @@
 py bot.py
-exit
+pause

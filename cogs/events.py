@@ -26,9 +26,6 @@ class Events(commands.Cog):
         self.run.start()
         self.eventsload()
 
-    def cog_unload(self):
-        self.run.cancel()
-
     def eventsload(self):
         try:
             file = open(os.getcwd()+"/Data/Global/Config/eventid.cfg","r+") #opens eventid.cfg
