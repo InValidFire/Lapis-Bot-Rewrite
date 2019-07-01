@@ -7,7 +7,7 @@ import core.vars
 logging.basicConfig(level=logging.ERROR)
 
 bot = commands.Bot(command_prefix='+', description='Various things Valdrea needs')
-cogs = ['cogs.timer', 'cogs.events', 'cogs.math', 'cogs.system','cogs.data','cogs.timezones','cogs.wiki']
+cogs = ['cogs.timer', 'cogs.events', 'cogs.math', 'cogs.system','cogs.data','cogs.timezones','cogs.minecraft','cogs.grid']
 dir = os.getcwd()
 
 if __name__ == '__main__':

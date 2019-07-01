@@ -13,9 +13,6 @@ class Timer(commands.Cog):
         self.bot = bot
         self.timer.start()
 
-    def cog_unload(self):
-        self.timer.cancel()
-
     @tasks.loop(seconds=1)
     async def timer(self):
         currentdaynum = time.strftime("%d")

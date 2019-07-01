@@ -14,7 +14,7 @@ class Data(commands.Cog):
 
     @commands.command()
     async def data(self, ctx, mode, type="all"):
-        if(cogs.system.System.lordcheck(ctx.author.id) == True):
+        if(ctx.author.id == core.vars.owner_id):
             if(mode == "create"):
                 if(type == "all"): #makes all directories required for bot functionality
                     if(os.path.exists(str(self.dir)+"/Data") != True):

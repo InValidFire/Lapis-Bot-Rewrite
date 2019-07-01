@@ -10,7 +10,9 @@ This bot aids us on our server Valdrea doing whatever we need it to, if you want
   * Allow for custom event messages (Done)
   * Command for adding/removing events from Discord (Done)
   * Command to reload the events.cfg file without a reboot (Done)
-* Convert Overworld coordinates to Nether coordinates
+* Convert Overworld coordinates to Nether coordinates and vice versa
+* Map our custom Nether Grid system to any set of coordinates, and look up each location.
+* Easily look up pages from the Minecraft Wiki
 * Convert temperature units
 * Check the time in specific timezones
 * Various Math functions
@@ -19,13 +21,13 @@ This bot aids us on our server Valdrea doing whatever we need it to, if you want
   * only people designated as Lapis Lords can run administrative commands
 ___
 ### Planned Additions
+* Expand `cogs.events` to enable creation of daily, monthly, and yearly events.
+* Expand `cogs.data` to allow us to request and send files to and from the bot. [LL Only]
 * Server activity tracking
   * Needs to be server specific, organizing data depending on the server
   * Track server, channel, and player stats, implemented in that order of priority
 * Allow players to set their own time zone, and others to query it.
-* Create `cogs.minecraft` to hold all minecraft related functions
-  * Move the `+nether` command here
-  * Add `+wiki` command to search the Minecraft Wiki and show any results (URL)
+* `cogs.minecraft`
   * Add `+recipe` command, would be able to load the recipe files supplied by Mojang starting in the 1.12 behavior pack.
     * Modes:
       * `lookup`: The default, just shows the recipe and its output
@@ -34,17 +36,13 @@ ___
       * `update`: Updates the recipes using the command's attached file (.zip) [Lapis Lord only]
 ___
 ### Planned Changes
-* Rename `cogs.update` to `cogs.system`
-  * Add `restart` command for restarting the bot [Lapis Lord only command]
-  * Add `+restartpi` command for restarting the pi [Owner only command]
+* `cogs.system`
   * Add `+info` command that shows pi info, such as the uptime, the IP address, and CPU usage [Owner only command]
-  * Add `+branch` command allowing us to switch the loaded branch
-  * Add `+github` command that links to the Github repository.
 ___
 ### Current Priorities
-* `cogs.system` commands completed
-* Server Activity Tracking
-* Decent Logging system
+* Expand `cogs.data`
+* Recipe Interpreter
+* Bug Fixing
 ___
 ### Contributing
 If you're feeling kind and you see a bug or issue that you can fix, feel free to make modifications and submit a pull request!

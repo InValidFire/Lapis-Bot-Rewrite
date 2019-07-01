@@ -65,7 +65,7 @@ class System(commands.Cog):
         """Closes the bot"""
         if(ctx.author.id == core.vars.owner_id):
             await ctx.send("Shutting down the bot.")
-            ctx.bot.close()
+            await ctx.bot.close()
         else:
             await ctx.send("Really? Thought you could just off me like that... rude.")
 
