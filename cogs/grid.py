@@ -83,14 +83,17 @@ class Grid(commands.Cog):
         for coord in data['nodecoords']:
             if coord == coordtemp:
                 nametemp = data['nodenames'][data['nodecoords'].index(coord)]
-        message = "Portal Name: " + nametemp + "\nX: " + str(xdest) + "\nZ: " + str(zdest) #note, make gridData save xlist items as int, not float.
+        message = "Portal Name: " + nametemp + "\nX: " + str(xdest) + "\nZ: " + str(zdest)
         await ctx.send(message)
 
     @commands.command(aliases=['gs'])
-    async def gridsearch(self,ctx,name,centerx=0,centerz=0,radius=1000):
+    async def gridsearch(self,ctx,*args):
         """ Search the grid for the desired location """
-        data = self.gridData(centerx,centerz,radius)
+        data = self.gridData(0,0,1000) #TODO: let this be loaded from a file
         message = ""
+        name = " ".join(args)
+        if "Dark Grey" in name:
+            name = "Dark Gray"
         for node in data['nodenames']:
             if name in node:
                 templist = data['nodecoords'][data['nodenames'].index(node)].split(", ")
@@ -107,7 +110,7 @@ class Grid(commands.Cog):
         r = -1
         message = ""
         for code in nodecodes:
-            if r==5:
+            if r==5: #TODO: see if .join can improve this, forgot that method existed. :/
                 r=0
             if r<5 and r!=0 and r!=-1 and code not in message:
                 message = message + " - " + code

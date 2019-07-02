@@ -203,5 +203,16 @@ class System(commands.Cog):
         """Gets link to the bot repository"""
         await ctx.send("Here's a link to my code:\n<https://github.com/InValidFire/Lapis-Bot-Rewrite>")
 
+    @commands.command(aliases=['issues','bugs','report'])
+    async def suggest(self,ctx):
+        """ Go to the suggestions page for Lapis. """
+        ownerid = self.bot.get_user(196335906871967744) #bot creator's ID, do not change unless you're forking the code.
+        await ctx.send("If you want to make a suggestion that " + ownerid.mention + " won't forget, do so here:\n<https://github.com/InValidFire/Lapis-Bot-Rewrite/issues>\nMake sure to label the post appropriately. =D")
+
+    @commands.command(aliases=['info'])
+    async def readme(self,ctx):
+        """ Shows Lapis's readme file """
+        await ctx.send("You'll find info about the bot here:\n<https://github.com/InValidFire/Lapis-Bot-Rewrite/blob/master/README.md>")
+
 def setup(bot):
     bot.add_cog(System(bot))

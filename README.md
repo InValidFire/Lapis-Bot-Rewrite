@@ -34,6 +34,12 @@ ___
       * `count`: If the recipe is given with a number in count mode, it will supply how many resources you'd need for that many recipes of that item, along with how many items you'll get
       * `items`: Kind of a reverse count, supply how many items you'd want and it'd give you how many recipes you'd need to make, along with the needed resources
       * `update`: Updates the recipes using the command's attached file (.zip) [Lapis Lord only]
+* Weather API tie-in
+  * Let people request a weather report for an input area
+* Google API tie-in
+  * Google search from bot?
+  * Also potentially move the events stuff to a google sheet
+  * Could also allow us to search for locations directly from the Address Book.
 ___
 ### Planned Changes
 * `cogs.system`

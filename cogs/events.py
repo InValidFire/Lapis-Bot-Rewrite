@@ -7,8 +7,6 @@ import cogs.system
 # TODO:
 # Add date specific Events
 #    - These don't reoccur.
-# Fix redundancy in closing and reopening the file just to write data.
-#    - Need to figure out how to move the file cursor to the end of the file in r+ mode
 # Make eventadd syntax a bit friendlier.
 #    - Not sure how as of the moment, will research possible methods
 
@@ -16,7 +14,7 @@ class Events(commands.Cog):
     i = 0 #gives each event a number, helping us identify it in the console (only shows up if debug is true)
     b = 0 #prevents bot from spamming messages, helps bot know when it's sent the announcement message
     timecache = "blank" #stores time value when successful. This way it knows when it's already sent the message.
-    debug = True #whether or not to get detailed debug info
+    debug = False #whether or not to get detailed debug info
     eventdata = []
     id = None
 
