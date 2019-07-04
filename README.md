@@ -5,11 +5,10 @@
 This bot aids us on our server Valdrea doing whatever we need it to, if you want to self host, be my guest. =D
 
 ### Current features
-* Scheduled Event Announcements (WIP)
-  * Send announcements at a specific time (Done)
-  * Allow for custom event messages (Done)
-  * Command for adding/removing events from Discord (Done)
-  * Command to reload the events.cfg file without a reboot (Done)
+* Scheduled Event Announcements
+  * Send announcements at a specific time
+  * Allow for custom event messages
+  * Command for easily adding/removing events from Discord
 * Convert Overworld coordinates to Nether coordinates and vice versa
 * Map our custom Nether Grid system to any set of coordinates, and look up each location.
 * Easily look up pages from the Minecraft Wiki
@@ -23,10 +22,9 @@ ___
 ### Planned Additions
 * Expand `cogs.events` to enable creation of daily, monthly, and yearly events.
 * Expand `cogs.data` to allow us to request and send files to and from the bot. [LL Only]
-* Server activity tracking
-  * Needs to be server specific, organizing data depending on the server
-  * Track server, channel, and player stats, implemented in that order of priority
-* Allow players to set their own time zone, and others to query it.
+* `cogs.profile` to allow users to set things like their preferred nickname, time zone (from pytz), Xbox Gamertag, Steam Name, NNID, B-Day, the likes
+  * Global or server specific?
+  * Allow users to query other users profiles to see current time, and shown accounts
 * `cogs.minecraft`
   * Add `+recipe` command, would be able to load the recipe files supplied by Mojang starting in the 1.12 behavior pack.
     * Modes:
@@ -40,14 +38,18 @@ ___
   * Google search from bot?
   * Also potentially move the events stuff to a google sheet
   * Could also allow us to search for locations directly from the Address Book.
-___
-### Planned Changes
-* `cogs.system`
-  * Add `+info` command that shows pi info, such as the uptime, the IP address, and CPU usage [Owner only command]
+* Dictionary.com API tie-in
+  * Define word from search
+  * Get synonyms or antonyms from search
+* PEMDAS command
+  * Processes the given string with the order of operations
+## Planned Changes
+* Replace old timer.py with a more flexible system
 ___
 ### Current Priorities
-* Expand `cogs.data`
 * Recipe Interpreter
+  * Need to expand `cogs.data`
+* Optimize code, make more functional
 * Bug Fixing
 ___
 ### Contributing

@@ -14,11 +14,15 @@ def nether(x,z):
 def overworld(x,z):
     x=math.floor(int(x)*8)
     z=math.floor(int(z)*8)
+    x2=math.floor(x+7)
+    z2=math.floor(z+7)
     d = dict()
     d['x'] = x
     d['z'] = z
+    d['x2'] = x2
+    d['z2'] = z2
     return d
-    
+
 class Math(commands.Cog):
     debug = True
     decimal = 0 #controls our moving decimal system

@@ -4,6 +4,8 @@ import core.vars
 from simpledate import SimpleDate
 import pytz
 
+#TODO:
+# make entire time system based on UTC, likely using this module. To replace cogs.timer
 class TimeZones(commands.Cog):
     debug = False
 

@@ -92,8 +92,8 @@ class Grid(commands.Cog):
         data = self.gridData(0,0,1000) #TODO: let this be loaded from a file
         message = ""
         name = " ".join(args)
-        if "Dark Grey" in name:
-            name = "Dark Gray"
+        if "Grey" in name:
+            name = name.replace("Grey","Gray")
         for node in data['nodenames']:
             if name in node:
                 templist = data['nodecoords'][data['nodenames'].index(node)].split(", ")
