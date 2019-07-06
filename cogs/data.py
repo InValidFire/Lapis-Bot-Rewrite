@@ -2,11 +2,14 @@ from discord.ext import tasks, commands
 import discord
 import core.vars
 import os
+from cogs.log import log
 
+#TODO:
+# Add a way to upload/request files to and from the bot.
 class Data(commands.Cog):
     debug = False
+    logging = False
     dir = os.getcwd()
-
 
     def __init__(self,bot):
         print("Setup: Initialized")

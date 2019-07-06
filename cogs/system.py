@@ -4,31 +4,32 @@ import subprocess
 import sys
 import shlex
 import core.vars
+from cogs.log import log
 
 #TODO:
 # Add a +time command, shows the time variables.
 # Make certain aspects server specific utilizing the new directory structure
-# Add a log function to log output to a file.
-# Improve output message information (possibly output to a Discord Channel?)
 # Refactor all commands to make more functional, decrease cyclical complexity
+# Subcommands: Use them, instead of interpreting arguments. 
 
 class System(commands.Cog):
     debug = False
+    logging = False
 
     def __init__(self,bot):
         print("System: Initialized")
         self.bot = bot
 
     def lordcheck(self,id):
-        if(core.vars.debug==True and self.debug==True):
+        if(self.logging==True and self.debug==True):
             print("System: Permission check started")
         file = open("Data/Global/Config/lapislord.cfg","r")
         for line in file:
             if(str(id) in line):
-                if(core.vars.debug==True and self.debug==True):
+                if(self.logging==True and self.debug==True):
                     print("System: Permission check passed")
                 return True
-        if(core.vars.debug==True and self.debug==True):
+        if(self.logging == True and self.debug==True):
             print("System: Permission check failed")
             return False
 
@@ -40,24 +41,24 @@ class System(commands.Cog):
         else:
             return False
 
-    async def addrole(self,ctx,user,*roles): #adds roles to a specified user.
+    async def addrole(self,ctx,user,*rolenames): #adds roles to a specified user.
         user = ctx.guild.get_member(user.id)
-        for role in roles:
-            role = discord.utils.get(ctx.guild.roles, name=role)
+        for rolename in rolenames:
+            role = discord.utils.get(ctx.guild.roles, name=rolename)
             if role == None:
-                await ctx.send(role.name + " role does not exist. :c")
+                await ctx.send(rolename + " role does not exist. :c")
             elif role in user.roles:
                 await ctx.send(role.name + " was already present.")
             elif role not in user.roles:
                 await user.add_roles(role)
                 await ctx.send(user.mention + " has been given role " + role.name + ".")
 
-    async def remrole(self,ctx,user,*roles): #removes roles from a specified user.
+    async def remrole(self,ctx,user,*rolenames): #removes roles from a specified user.
         user = ctx.guild.get_member(user.id)
-        for role in roles:
-            role = discord.utils.get(ctx.guild.roles, name=role)
+        for rolename in rolenames:
+            role = discord.utils.get(ctx.guild.roles, name=rolename)
             if role == None:
-                await ctx.send(role.name + " role does not exist. :c")
+                await ctx.send(rolename + " role does not exist. :c")
             elif role in user.roles:
                 await user.remove_roles(role)
                 await ctx.send(role.name + " has been removed from " + user.mention)
@@ -261,6 +262,7 @@ class System(commands.Cog):
     async def trust(self,ctx,user: discord.User=None):
         if self.staffcheck(ctx,ctx.author) == True:
             await self.addrole(ctx,user,"Trusted")
+            await log(self,"{} has trusted {}".format(ctx.author.name,user.name))
         else:
             await ctx.send("You do not have permission to use this command.")
 
@@ -268,20 +270,23 @@ class System(commands.Cog):
     async def untrust(self,ctx,user: discord.User=None):
         if self.staffcheck(ctx,ctx.author) == True:
             await self.remrole(ctx,user,"Trusted")
+            await log(self,"{} has untrusted {}".format(ctx.author.name,user.name))
         else:
             await ctx.send("You do not have permission to use this command.")
 
     @commands.command()
     async def approve(self,ctx,user: discord.User=None):
         if self.staffcheck(ctx,ctx.author) == True:
-            await self.addrole(ctx,user,"Approved")
+            await self.addrole(ctx,user,"Approved","Bedrock")
+            await log(self,"{} has approved {}".format(ctx.author.name,user.name))
         else:
             await ctx.send("You do not have permission to use this command.")
 
     @commands.command()
     async def unapprove(self,ctx,user: discord.User=None):
         if self.staffcheck(ctx.author) == True:
-            await self.remrole(ctx,user,"Approved")
+            await self.remrole(ctx,user,"Approved","Bedrock")
+            await log(self,"{} has unapproved {}".format(ctx.author.name,user.name))
         else:
             await ctx.send("You do not have permission to use this command.")
 def setup(bot):

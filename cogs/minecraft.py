@@ -4,9 +4,11 @@ import core.vars
 from cogs.math import nether,overworld
 from urllib.request import urlopen
 from math import floor
+from cogs.log import log
 
 class Minecraft(commands.Cog):
     debug = False
+    logging = False
 
     def __init__(self,bot):
         print("Minecraft: Initialized")
@@ -17,6 +19,8 @@ class Minecraft(commands.Cog):
         """Search the Minecraft Wiki."""
         with urlopen("https://minecraft.gamepedia.com/Special:Search/{}".format('_'.join(args))) as page:
             await ctx.send(str(page.geturl()))
+        if(self.logging == True):
+            await log(self,"Searched the Minecraft wiki for {}".format(' '.join(args)))
 
     @commands.command()
     async def locations(self,ctx):
@@ -28,8 +32,8 @@ class Minecraft(commands.Cog):
         """ Converts given Overworld coordinates to Nether coordinates """
         coords = nether(xcoord,zcoord)
         await ctx.send("Nether Coords: \nX: {x:d}\nZ: {z:d}".format(x=coords['x'],z=coords['z']))
-        if(self.debug == True and core.vars.debug == True):
-            print("Converted Overworld coords to Nether coords")
+        if(self.logging == True):
+            await log(self,"Converted Overworld coords to Nether coords")
 
     @commands.command()
     async def overworld(self,ctx,xcoord,zcoord):
@@ -37,8 +41,8 @@ class Minecraft(commands.Cog):
         +/-8 block range"""
         coords = overworld(xcoord,zcoord)
         await ctx.send("Overworld Coords:\nX: {x:d} to {x2:d}\nZ: {z:d} to {z2:d}".format(x=coords['x'],x2=coords['x2'],z=coords['z'],z2=coords['z2']))
-        if(self.debug == True and core.vars.debug == True):
-            print("Converted Nether coords to Overworld coords")
+        if(self.logging == True):
+            await log(self,"Converted Nether coords to Overworld coords")
 
 def setup(bot):
     bot.add_cog(Minecraft(bot))

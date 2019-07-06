@@ -3,11 +3,14 @@ import discord
 import core.vars
 from simpledate import SimpleDate
 import pytz
+from cogs.log import log
 
 #TODO:
 # make entire time system based on UTC, likely using this module. To replace cogs.timer
+
 class TimeZones(commands.Cog):
     debug = False
+    logging = False
 
     def __init__(self,bot):
         print("TimeZones: Initialized")

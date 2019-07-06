@@ -2,9 +2,11 @@ import discord
 from discord.ext import tasks, commands
 import core.vars
 import cogs.math
+from cogs.log import log
 
 class Grid(commands.Cog):
-    debug = True
+    debug = False
+    logging = False
 
     def __init__(self,bot):
         print("Grid: Initialized")
@@ -59,6 +61,8 @@ class Grid(commands.Cog):
             templist = coord.split(", ")
             ncoords = cogs.math.nether(templist[0],templist[1])
             message = message + data['nodenames'][data['nodecoords'].index(coord)] + ": " + coord + " [" + str(ncoords['x']) + ", " + str(ncoords['z']) + "]\n"
+        if self.logging == True:
+            await log(self,"Grid: Executed gridmap with coords: {x}, {z} and radius: {r}".format(x=centerx,z=centerz,r=radius))
         await ctx.send(message)
 
     @commands.command(aliases=['gf'])
@@ -84,6 +88,8 @@ class Grid(commands.Cog):
             if coord == coordtemp:
                 nametemp = data['nodenames'][data['nodecoords'].index(coord)]
         message = "Portal Name: " + nametemp + "\nX: " + str(xdest) + "\nZ: " + str(zdest)
+        if self.logging == True:
+            await log(self,"Grid: Executed gridfind for coords {} and {}, finding portal '{}''".format(xcoord,xcoord,nametemp))
         await ctx.send(message)
 
     @commands.command(aliases=['gs'])
@@ -101,6 +107,8 @@ class Grid(commands.Cog):
                 message = message + node + ": " + data['nodecoords'][data['nodenames'].index(node)] + " [" + str(ncoords['x']) + ", " + str(ncoords['z']) + ']' "\n"
         if message == "":
             message = "Nothing found."
+        if self.logging == True:
+            await log(self,"Grid: Executed gridsearch for name {}".format(name))
         await ctx.send(message)
 
     @commands.command(aliases=['gv'])
@@ -122,6 +130,8 @@ class Grid(commands.Cog):
                 message = message + "`\n`" + code
                 r= r+1
         message = message + "`"
+        if self.logging == True:
+            await log(self,"Grid: Executed gridview successfully.")
         await ctx.send(message)
 def setup(bot):
     bot.add_cog(Grid(bot))

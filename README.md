@@ -45,12 +45,14 @@ ___
   * Processes the given string with the order of operations
 ## Planned Changes
 * Replace old timer.py with a more flexible system
+* Load debug and logging variable states from file (saving state across reboot)
 ___
 ### Current Priorities
 * Recipe Interpreter
   * Need to expand `cogs.data`
 * Optimize code, make more functional
 * Bug Fixing
+* Logging and Debug system upgrades
 ___
 ### Contributing
 If you're feeling kind and you see a bug or issue that you can fix, feel free to make modifications and submit a pull request!
