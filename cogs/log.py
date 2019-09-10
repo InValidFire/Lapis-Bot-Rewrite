@@ -17,7 +17,7 @@ class Log(commands.Cog):
 
     @commands.command() #possibly creating new variable instead of pointing to the one requested. :/ Need to figure this out.
     async def debug(self,ctx,cogname):
-        """ Toggle Debug mode """
+        """ Toggle Debug mode for given cog. """
         cogname = cogname.lower()
         cog = getattr(cogs,cogname)
         cogname = cogname.capitalize()
@@ -30,6 +30,7 @@ class Log(commands.Cog):
 
     @commands.command()
     async def logging(self,ctx,cogname):
+        """ Toggle logging for given cog. """
         cogname = cogname.lower()
         cog = getattr(cogs,cogname)
         cogname = cogname.capitalize()

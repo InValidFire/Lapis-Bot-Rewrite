@@ -10,7 +10,7 @@ from cogs.log import log
 # Add a +time command, shows the time variables.
 # Make certain aspects server specific utilizing the new directory structure
 # Refactor all commands to make more functional, decrease cyclical complexity
-# Subcommands: Use them, instead of interpreting arguments. 
+# Subcommands: Use them, instead of interpreting arguments.
 
 class System(commands.Cog):
     debug = False
@@ -260,6 +260,7 @@ class System(commands.Cog):
 
     @commands.command()
     async def trust(self,ctx,user: discord.User=None):
+        """ Trust the given user """
         if self.staffcheck(ctx,ctx.author) == True:
             await self.addrole(ctx,user,"Trusted")
             await log(self,"{} has trusted {}".format(ctx.author.name,user.name))
@@ -268,6 +269,7 @@ class System(commands.Cog):
 
     @commands.command()
     async def untrust(self,ctx,user: discord.User=None):
+        """ Remove the Trusted role from given user. """
         if self.staffcheck(ctx,ctx.author) == True:
             await self.remrole(ctx,user,"Trusted")
             await log(self,"{} has untrusted {}".format(ctx.author.name,user.name))
@@ -276,14 +278,16 @@ class System(commands.Cog):
 
     @commands.command()
     async def approve(self,ctx,user: discord.User=None):
+        """ Approve the given user """
         if self.staffcheck(ctx,ctx.author) == True:
-            await self.addrole(ctx,user,"Approved","Bedrock")
+            await self.addrole(ctx,user,"Approved")
             await log(self,"{} has approved {}".format(ctx.author.name,user.name))
         else:
             await ctx.send("You do not have permission to use this command.")
 
     @commands.command()
     async def unapprove(self,ctx,user: discord.User=None):
+        """ Remove the Approved role from given user. """
         if self.staffcheck(ctx.author) == True:
             await self.remrole(ctx,user,"Approved","Bedrock")
             await log(self,"{} has unapproved {}".format(ctx.author.name,user.name))
