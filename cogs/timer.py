@@ -1,3 +1,4 @@
+#Disabled - Going to phase out completely with timezones.py
 from discord.ext import tasks, commands
 import time
 import core.vars

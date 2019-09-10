@@ -1,3 +1,4 @@
+#Disabled - Cog was far too broken and unintuitive to be useful. Will replace with a new module later.
 from discord.ext import tasks, commands
 import time
 import os
