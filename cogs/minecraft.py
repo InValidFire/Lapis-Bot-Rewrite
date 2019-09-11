@@ -22,10 +22,10 @@ class Minecraft(commands.Cog):
         if(self.logging == True):
             await log(self,"Searched the Minecraft wiki for {}".format(' '.join(args)))
 
-    @commands.command()
-    async def locations(self,ctx):
-        """ Show the link for the Valdrea Address Book """
-        await ctx.send("You can add or remove locations to the Address Book here:\n<https://docs.google.com/spreadsheets/d/1AsiOVZLNIWb_XxsvvRnU3tG81JqfcNPpS2NML-zh2Uw/edit?usp=sharing>")
+    #@commands.command()
+    #async def locations(self,ctx):
+    #    """ Show the link for the Valdrea Address Book """
+    #    await ctx.send("You can add or remove locations to the Address Book here:\n<https://docs.google.com/spreadsheets/d/1AsiOVZLNIWb_XxsvvRnU3tG81JqfcNPpS2NML-zh2Uw/edit?usp=sharing>")
 
     @commands.command(aliases=['portal'])
     async def nether(self,ctx,xcoord,zcoord):

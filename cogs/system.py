@@ -268,6 +268,10 @@ class System(commands.Cog):
             await ctx.send("You do not have permission to use this command.")
 
     @commands.command()
+    async def ping(self,ctx): #sends a command with the latency between request and response.
+        await ctx.send("Pong! - "+str(round(self.bot.latency*1000))+"ms")
+
+    @commands.command()
     async def untrust(self,ctx,user: discord.User=None):
         """ Remove the Trusted role from given user. """
         if self.staffcheck(ctx,ctx.author) == True:

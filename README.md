@@ -28,14 +28,28 @@ ___
   * Get synonyms or antonyms from search
 * Improve Maths
   * Using Sympy, process math stuffs
-## Planned Changes
-* Load debug and logging variable states from file (saving state across reboot)
 ___
 ### Current Priorities
-* Replace old timer.py with a more flexible system
 * Optimize code, make more functional, sub commands
 * Bug Fixing
+* Data system upgrades
+  * Finish functionalizing: deldir()
+  * Possibly make tree creation by step instead of by folder.
+    * Split at '/', check existence, make if necessary, go to next. More fluid and adaptable, compressable.
+  * Let lapislords send/request files from Bot's Data.
+    * Possible uses:
+      * recipe interpretation
+      * Add-On hosting
+    * Possibly instead link to Google Drive
 * Logging and Debug system upgrades
+  * Save variable states to file
+  * Change channel output to subscription based, sending to a list of channels who opt-in, instead of only one.
+* Use git python package instead of hardwired console commands
+* Rewrite cogs.system
+  * Subcommand it
+  * Fix lapislords
+* Rewrite bot.py
+  * Improve old code
 ___
 ### Contributing
 If you're feeling kind and you see a bug or issue that you can fix, feel free to make modifications and submit a pull request!

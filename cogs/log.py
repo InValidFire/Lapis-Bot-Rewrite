@@ -6,7 +6,7 @@ import cogs
 # Server specific stuff needs to happen
 # Save and load the debug/logging variables from a file
 
-async def log(self,message,channel=596855809254752303):
+async def log(self,message,channel=566836559039430668):
     channel = self.bot.get_channel(channel)
     await channel.send(message)
 

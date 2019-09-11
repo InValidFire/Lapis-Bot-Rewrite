@@ -59,42 +59,42 @@ class Math(commands.Cog):
             kelvin = celsius + 273.15
             await ctx.send("{f:.2f}°F = {c:.2f}°C or {k:.2f}K".format(f=fahrenheit,c=celsius,k=kelvin))
             if(self.debug == True and self.logging == True):
-                log(self,"Math: Converted Fahrenheit to Celsius")
+                await log(self,"Math: Converted Fahrenheit to Celsius")
         if(scale == "K" or scale == "k" or scale == "Kelvin" or scale == "kelvin"):
             kelvin = float(temperature)
             celsius = kelvin - 273.15
             fahrenheit = celsius*9/5+32
             await ctx.send("{k:.2f}K = {c:.2f}°C or {f:.2f}°F".format(k=kelvin,c=celsius,f=fahrenheit))
             if(self.debug == True and self.logging == True):
-                log(self,"Math: Converted Kelvin to Celsius")
+                await log(self,"Math: Converted Kelvin to Celsius")
 
     @commands.command(aliases=['add'])
     async def addition(self,ctx,num1,num2):
         """ Adds two numbers """
         await ctx.send(str(round(float(num1)+float(num2),self.decimal)))
         if(self.debug == True and self.logging == True):
-            log(self,"Math: Added {} and {}".format(num1,num2))
+            await log(self,"Math: Added {} and {}".format(num1,num2))
 
     @commands.command(aliases=['sub'])
     async def subtract(self,ctx,num1,num2):
         """ Subtracts two numbers """
         await ctx.send(str(round(float(num1)-float(num2),self.decimal)))
         if(self.debug == True and self.logging == True):
-            log(self,"Math: Subtracted {} and {}".format(num1,num2))
+            await log(self,"Math: Subtracted {} and {}".format(num1,num2))
 
     @commands.command(aliases=['times'])
     async def multiply(self,ctx,num1,num2):
         """ Multiplies two numbers """
         await ctx.send(str(round(float(num1)*float(num2),self.decimal)))
         if(self.debug == True and self.logging == True):
-            log(self,"Math: Multiplied {} and {}".format(num1,num2))
+            await log(self,"Math: Multiplied {} and {}".format(num1,num2))
 
     @commands.command(aliases=['div'])
     async def divide(self,ctx,num1,num2):
         """ Divides two numbers """
         await ctx.send(str(round(float(num1)/float(num2),self.decimal)))
         if(self.debug == True and self.logging == True):
-            log(self,"Math: Divided {} and {}".format(num1,num2))
+            await log(self,"Math: Divided {} and {}".format(num1,num2))
 
 def setup(bot):
     bot.add_cog(Math(bot))

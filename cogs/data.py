@@ -6,77 +6,87 @@ from cogs.log import log
 
 #TODO:
 # Add a way to upload/request files to and from the bot.
+
 class Data(commands.Cog):
     debug = False
     logging = False
     dir = os.getcwd()
-
+    types = ["all","global","server"]
+    typestring = ", ".join(types)
     def __init__(self,bot):
         print("Setup: Initialized")
         self.bot = bot
 
-    @commands.command()
-    async def data(self, ctx, mode, type="all"):
-        if(ctx.author.id == core.vars.owner_id):
-            if(mode == "create"):
-                if(type == "all"): #makes all directories required for bot functionality
-                    if(os.path.exists(str(self.dir)+"/Data") != True):
-                        os.makedirs(str(self.dir)+"/Data")
-                        await ctx.send("Created: /Data")
-                    if(os.path.exists(str(self.dir)+"/Data/Global") != True):
-                        os.makedirs(str(self.dir)+"/Data/Global")
-                        await ctx.send("Created: /Data/Global")
-                    if(os.path.exists(str(self.dir)+"/Data/Global/Activity") != True):
-                        os.makedirs(str(self.dir)+"/Data/Global/Activity")
-                        await ctx.send("Created: /Data/Global/Activity")
-                    if(os.path.exists(str(self.dir)+"/Data/Global/Config") != True):
-                        os.makedirs(str(self.dir)+"/Data/Global/Config")
-                        await ctx.send("Created: /Data/Global/Config")
-                    if(os.path.exists(str(self.dir)+"/Data/Server") != True):
-                        os.makedirs(str(self.dir)+"/Data/Server")
-                        await ctx.send("Created: /Data/Server")
-                    if(os.path.exists(str(self.dir)+"/Data/Server/"+str(ctx.message.guild.id)) != True):
-                        os.makedirs(str(self.dir)+"/Data/Server/"+str(ctx.message.guild.id))
-                        await ctx.send("Created /Data/Server/"+str(ctx.message.guild.id))
-                    if(os.path.exists(str(self.dir)+"/Data/Server/"+str(ctx.message.guild.id)+"/Activity") != True):
-                        os.makedirs(str(self.dir)+"/Data/Server/"+str(ctx.message.guild.id)+"/Activity")
-                        await ctx.send("Created: /Data/Server/"+str(ctx.message.guild.id)+"/Activity")
-                    if(os.path.exists(str(self.dir)+"/Data/Server/"+str(ctx.message.guild.id)+"/Config") != True):
-                        os.makedirs(str(self.dir)+"/Data/Server/"+str(ctx.message.guild.id)+"/Config")
-                        await ctx.send("Created: /Data/Server/"+str(ctx.message.guild.id)+"/Config")
-                    if(os.path.exists(str(self.dir)+"/Data/Global/Config/lapislord.cfg") != True):
-                        file = open("Data/Global/Config/lapislord.cfg","w+")
-                        file.close()
-                        await ctx.send("Created the global lapislord.cfg file.")
-                    if(os.path.exists(str(self.dir)+"/Data/Global/Config/events.cfg") != True):
-                        file = open(str(self.dir)+"/Data/Global/Config/events.cfg","w+")
-                        file.close()
-                        await ctx.send("Created the global events.cfg file.")
-                    if(os.path.exists(str(self.dir)+"/Data/Server/"+str(ctx.message.guild.id)+"/Config/channels.cfg") != True):
-                        file = open(str(self.dir)+"/Data/Server/"+str(ctx.message.guild.id)+"/Config/channels.cfg","w+")
-                        file.close()
-                        await ctx.send("Created the server's channels.cfg file.")
-                    if(os.path.exists(str(self.dir)+"/Data/Global/Config/eventid.cfg") != True):
-                        file = open(str(self.dir)+"/Data/Global/Config/eventid.cfg","w+")
-                        file.write(str(0))
-                        file.close()
-                        await ctx.send("Created the global eventid.cfg file.")
-                    await ctx.send("Setup complete.")
-            if(mode == "list" or mode == "show"):
-                dir = str(self.dir)
-                for dirpath,dirnames,files in os.walk(dir+"/Data"):
-                    await ctx.send(dirpath.replace(dir,""))
-                    for file in files:
-                        await ctx.send("└── "+file)
-            if(mode == "delete"):
-                dir = str(self.dir)
-                for dirpath,dirnames,files in os.walk(dir+"/Data",topdown=False):
-                    for file in files:
-                        os.remove(os.path.join(dirpath,file))
-                    for dirs in dirnames:
-                        os.rmdir(os.path.join(dirpath,dirs))
-                os.rmdir(dir+"/Data")
-                await ctx.send("Deleted the /Data directory")
+    async def makefile(self,structurepath,data = None):
+        if(os.path.exists(str(self.dir)+structurepath) != True):
+            file = open(str(self.dir)+str(structurepath),"w+")
+            file.write(str(data))
+            file.close()
+            if(self.logging==True):
+                await log(self,"Data: Created file: "+structurepath)
+        else:
+            if(self.logging==True):
+                await log(self,"Data: File: "+structurepath+" was already found.")
+
+    async def makedir(self,structurepath):
+        if(os.path.exists(str(self.dir)+str(structurepath)) != True):
+            os.makedirs(str(self.dir)+str(structurepath))
+            if(self.logging==True):
+                await log(self,"Data: Created directory: "+structurepath)
+        else:
+            if(self.logging==True):
+                await log(self,"Data: Directory "+structurepath+" was already found.")
+
+    async def serverset(self,serverid):
+        structure = {
+        "global": ["dir-/Data","dir-/Data/Global","dir-/Data/Global/Config","file-/Data/Global/Config/settings.ini-data-TEST","file-/Data/Global/Config/lapislords.ini"],
+        "server": ["dir-/Data","dir-/Data/Server/"+serverid,"dir-/Data/Server/"+serverid+"/Config"]
+        }
+        return structure
+
+    @commands.group()
+    async def data(self, ctx):
+        if(ctx.invoked_subcommand is None):
+                await ctx.send("Invalid data command passed.")
+
+    @data.command()
+    async def create(self,ctx,type):
+        datastructure = await self.serverset(str(ctx.message.guild.id))
+        actionlist = datastructure.get(type)
+        print(actionlist)
+        for action in actionlist:
+            splitstring = action.split("-")
+            print(splitstring[0]+"-"+splitstring[1])
+            if(splitstring[0] == "dir"):
+                await self.makedir(splitstring[1])
+            if(splitstring[0] == "file"):
+                if(len(splitstring)>2):
+                    await self.makefile(splitstring[1],splitstring[3]) #tells it to write data if any is found.
+                if(len(splitstring)==2):
+                    await self.makefile(splitstring[1])
+            print("Successfully made "+splitstring[0]+"-"+splitstring[1])
+
+    @data.command(aliases=['show'])
+    async def list(self,ctx):
+        dir = str(self.dir)
+        for dirpath,dirnames,files in os.walk(dir+"\\Data"):
+            await ctx.send(dirpath.replace(dir,""))
+            for file in files:
+                await ctx.send("└── "+file)
+
+    @data.command()
+    async def delete(self,ctx,type="None"):
+        if(type == "None"):
+            await ctx.send("Select a type: "+self.typestring)
+        if(type == "all"):
+            dir = str(self.dir)
+            for dirpath,dirnames,files in os.walk(dir+"/Data",topdown=False):
+                for file in files:
+                    os.remove(os.path.join(dirpath,file))
+                for dirs in dirnames:
+                    os.rmdir(os.path.join(dirpath,dirs))
+            os.rmdir(dir+"/Data")
+            await ctx.send("Deleted the /Data directory")
 
 def setup(bot):
     bot.add_cog(Data(bot))
