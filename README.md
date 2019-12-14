@@ -1,15 +1,10 @@
 # Lapis Bot Rewrite
-* Developed by Fire and WWMB
+* Developed by InValidFire
 
 ## Purpose
 This bot aids us on our server Valdrea doing whatever we need it to, if you want to self host, be my guest. =D
 
 ### Current features
-* Scheduled Event Announcements (WIP)
-  * Send announcements at a specific time (Done)
-  * Allow for custom event messages (Done)
-  * Command for adding/removing events from Discord (Done)
-  * Command to reload the events.cfg file without a reboot (Done)
 * Convert Overworld coordinates to Nether coordinates and vice versa
 * Map our custom Nether Grid system to any set of coordinates, and look up each location.
 * Easily look up pages from the Minecraft Wiki
@@ -21,28 +16,40 @@ This bot aids us on our server Valdrea doing whatever we need it to, if you want
   * only people designated as Lapis Lords can run administrative commands
 ___
 ### Planned Additions
-* Expand `cogs.events` to enable creation of daily, monthly, and yearly events.
-* Expand `cogs.data` to allow us to request and send files to and from the bot. [LL Only]
-* Server activity tracking
-  * Needs to be server specific, organizing data depending on the server
-  * Track server, channel, and player stats, implemented in that order of priority
-* Allow players to set their own time zone, and others to query it.
-* `cogs.minecraft`
-  * Add `+recipe` command, would be able to load the recipe files supplied by Mojang starting in the 1.12 behavior pack.
-    * Modes:
-      * `lookup`: The default, just shows the recipe and its output
-      * `count`: If the recipe is given with a number in count mode, it will supply how many resources you'd need for that many recipes of that item, along with how many items you'll get
-      * `items`: Kind of a reverse count, supply how many items you'd want and it'd give you how many recipes you'd need to make, along with the needed resources
-      * `update`: Updates the recipes using the command's attached file (.zip) [Lapis Lord only]
-___
-### Planned Changes
-* `cogs.system`
-  * Add `+info` command that shows pi info, such as the uptime, the IP address, and CPU usage [Owner only command]
+* `cogs.playerdata'
+  * Pulls data from our Player Data spreadsheet, displaying what is requested depending on the requesting user's permissions.
+* Weather API tie-in
+  * Let people request a weather report for an input area
+* Google API tie-in
+  * Google search from bot?
+  * Could also allow us to search for locations directly from the Address Book.
+* Dictionary.com API tie-in
+  * Define word from search
+  * Get synonyms or antonyms from search
+* Improve Maths
+  * Using Sympy, process math stuffs
 ___
 ### Current Priorities
-* Expand `cogs.data`
-* Recipe Interpreter
+* Optimize code, make more functional, sub commands
 * Bug Fixing
+* Data system upgrades
+  * ~~Functionalize file deletion~~
+  * ~~Possibly make tree creation by step instead of by folder.~~
+    * ~~Split at '/', check existence, make if necessary, go to next. More fluid and adaptable, compressable.~~
+  * Let lapislords send/request files from Bot's Data.
+    * Possible uses:
+      * recipe interpretation
+      * Add-On hosting
+    * Possibly instead link to Google Drive
+* Logging and Debug system upgrades
+  * Save variable states to file
+  * Change channel output to subscription based, sending to a list of channels who opt-in, instead of only one.
+* Use git python package instead of hardwired console commands
+* Rewrite cogs.system
+  * Subcommand it
+  * Fix lapislords
+* Rewrite bot.py
+  * Improve old code
 ___
 ### Contributing
 If you're feeling kind and you see a bug or issue that you can fix, feel free to make modifications and submit a pull request!

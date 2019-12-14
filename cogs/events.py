@@ -1,22 +1,24 @@
+#Disabled - Cog was far too broken and unintuitive to be useful. Will replace with a new module later.
 from discord.ext import tasks, commands
 import time
 import os
 import core.vars
 import cogs.system
+from cogs.log import log
 
 # TODO:
 # Add date specific Events
 #    - These don't reoccur.
-# Fix redundancy in closing and reopening the file just to write data.
-#    - Need to figure out how to move the file cursor to the end of the file in r+ mode
 # Make eventadd syntax a bit friendlier.
 #    - Not sure how as of the moment, will research possible methods
+#    - Possibly use a Google Sheet, read from that?
 
 class Events(commands.Cog):
     i = 0 #gives each event a number, helping us identify it in the console (only shows up if debug is true)
     b = 0 #prevents bot from spamming messages, helps bot know when it's sent the announcement message
     timecache = "blank" #stores time value when successful. This way it knows when it's already sent the message.
-    debug = True #whether or not to get detailed debug info
+    debug = False #whether or not to get detailed debug info
+    logging = False
     eventdata = []
     id = None
 
@@ -43,14 +45,14 @@ class Events(commands.Cog):
 
     @tasks.loop(seconds=5.0)
     async def run(self): #checks if the time matches, and posts an event reminder if so
-        if(self.debug == True and core.vars.debug == True):
-            print("Events: 1b: "+str(self.b))
+        if(self.debug == True and self.logging == True):
+            await log(self,"Events: 1b: "+str(self.b))
         channel = self.bot.get_channel(core.vars.channel_announcements) #creates channel object linked to announcement channel.
         currentdaytime = core.vars.currentdaytime #currentdaytime = DAY, TIME
         eventdata = self.eventdata #list of events loaded from events.cfg in saveload.py
         self.i = 1
-        if(self.debug == True and core.vars.debug == True):
-            print("-------"+str(1)+"-------")
+        if(self.debug == True and self.logging == True):
+            await log(self,"-------"+str(1)+"-------")
         for data in eventdata: #compares the current time with the event times loaded
             self.i = self.i + 1
             if(self.i > len(eventdata)): #keeps 'i' from exceeding the amount of events
@@ -60,28 +62,29 @@ class Events(commands.Cog):
             time = temp[1]
             type = temp[2]
             message = temp[3]
-            if(self.debug == True and core.vars.debug == True):
-                print("Events: ID: "+id)
-                print("Events: Time: "+time)
-                print("Events: Type: "+type)
-                print("Events: Message: "+message)
-                print("Events: Testing "+time+" against the current time, "+currentdaytime)
+            if(self.debug == True and self.logging == True):
+                await log(self,"Events: ID: "+id)
+                await log(self,"Events: Time: "+time)
+                await log(self,"Events: Type: "+type)
+                await log(self,"Events: Message: "+message)
+                await log(self,"Events: Testing "+time+" against the current time, "+currentdaytime)
             if(currentdaytime == time and self.b == 0): #if the time matches the currentdaytime, send the message if it hasn't already
-                if(self.debug == True and core.vars.debug == True):
-                    print("Events: 2b: "+str(self.b))
+                if(self.debug == True and self.logging == True):
+                    await log(self,"Events: 2b: "+str(self.b))
                 await channel.send(message)
-                print("Events: Message sent!")
-                if(self.debug == True or core.vars.debug == True):
-                    print("-------"+str(self.i)+"-------")
+                await log(self,"Events: Message sent!")
+                if(self.debug == True or self.logging == True):
+                    await log(self,"-------"+str(self.i)+"-------")
                 self.timecache = time #stores the successful time to the cache
                 self.b = 1
             if (currentdaytime != self.timecache and self.b == 1):
                 self.b = 0
-            if (currentdaytime != time and self.b == 0 and (self.debug == True and core.vars.debug == True)):
-                print("Events: 3b: "+str(self.b))
-                print("Events: Did not match")
-                print("-------"+str(self.i)+"-------")
-        print("Events: Completed time check. - "+currentdaytime)
+            if (currentdaytime != time and self.b == 0 and (self.debug == True and self.logging == True)):
+                await log(self,"Events: 3b: "+str(self.b))
+                await log(self,"Events: Did not match")
+                await log(self,"-------"+str(self.i)+"-------")
+        if self.logging == True:
+            await log(self,"Events: Completed time check. - "+currentdaytime)
 
     @commands.command()
     async def eventadd(self,ctx,message,timedate=None,type="weekly"):

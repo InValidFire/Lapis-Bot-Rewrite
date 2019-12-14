@@ -2,9 +2,11 @@ import discord
 from discord.ext import tasks, commands
 import core.vars
 import cogs.math
+from cogs.log import log
 
 class Grid(commands.Cog):
-    debug = True
+    debug = False
+    logging = False
 
     def __init__(self,bot):
         print("Grid: Initialized")
@@ -59,6 +61,8 @@ class Grid(commands.Cog):
             templist = coord.split(", ")
             ncoords = cogs.math.nether(templist[0],templist[1])
             message = message + data['nodenames'][data['nodecoords'].index(coord)] + ": " + coord + " [" + str(ncoords['x']) + ", " + str(ncoords['z']) + "]\n"
+        if self.logging == True:
+            await log(self,"Grid: Executed gridmap with coords: {x}, {z} and radius: {r}".format(x=centerx,z=centerz,r=radius))
         await ctx.send(message)
 
     @commands.command(aliases=['gf'])
@@ -83,14 +87,19 @@ class Grid(commands.Cog):
         for coord in data['nodecoords']:
             if coord == coordtemp:
                 nametemp = data['nodenames'][data['nodecoords'].index(coord)]
-        message = "Portal Name: " + nametemp + "\nX: " + str(xdest) + "\nZ: " + str(zdest) #note, make gridData save xlist items as int, not float.
+        message = "Portal Name: " + nametemp + "\nX: " + str(xdest) + "\nZ: " + str(zdest)
+        if self.logging == True:
+            await log(self,"Grid: Executed gridfind for coords {} and {}, finding portal '{}''".format(xcoord,xcoord,nametemp))
         await ctx.send(message)
 
     @commands.command(aliases=['gs'])
-    async def gridsearch(self,ctx,name,centerx=0,centerz=0,radius=1000):
+    async def gridsearch(self,ctx,*args):
         """ Search the grid for the desired location """
-        data = self.gridData(centerx,centerz,radius)
+        data = self.gridData(0,0,1000) #TODO: let this be loaded from a file
         message = ""
+        name = " ".join(args)
+        if "Grey" in name:
+            name = name.replace("Grey","Gray")
         for node in data['nodenames']:
             if name in node:
                 templist = data['nodecoords'][data['nodenames'].index(node)].split(", ")
@@ -98,6 +107,8 @@ class Grid(commands.Cog):
                 message = message + node + ": " + data['nodecoords'][data['nodenames'].index(node)] + " [" + str(ncoords['x']) + ", " + str(ncoords['z']) + ']' "\n"
         if message == "":
             message = "Nothing found."
+        if self.logging == True:
+            await log(self,"Grid: Executed gridsearch for name {}".format(name))
         await ctx.send(message)
 
     @commands.command(aliases=['gv'])
@@ -107,7 +118,7 @@ class Grid(commands.Cog):
         r = -1
         message = ""
         for code in nodecodes:
-            if r==5:
+            if r==5: #TODO: see if .join can improve this, forgot that method existed. :/
                 r=0
             if r<5 and r!=0 and r!=-1 and code not in message:
                 message = message + " - " + code
@@ -119,6 +130,8 @@ class Grid(commands.Cog):
                 message = message + "`\n`" + code
                 r= r+1
         message = message + "`"
+        if self.logging == True:
+            await log(self,"Grid: Executed gridview successfully.")
         await ctx.send(message)
 def setup(bot):
     bot.add_cog(Grid(bot))

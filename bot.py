@@ -7,9 +7,10 @@ import core.vars
 logging.basicConfig(level=logging.ERROR)
 
 bot = commands.Bot(command_prefix='+', description='Various things Valdrea needs')
-cogs = ['cogs.timer', 'cogs.events', 'cogs.math', 'cogs.system','cogs.data','cogs.timezones','cogs.minecraft','cogs.grid']
+cogs = ['cogs.system','cogs.data','cogs.log','cogs.math','cogs.timezones','cogs.minecraft','cogs.grid']
 dir = os.getcwd()
-
+debug = False
+logging = False
 if __name__ == '__main__':
     for cog in cogs:
         bot.load_extension(cog)
@@ -53,8 +54,7 @@ async def on_ready():
         await channel.send("We're back!")
         os.remove("restartpi.temp")
         restart = True
-    if(core.vars.debug == False and update == False and branch == False and restart == False):
+    if(debug == False and update == False and branch == False and restart == False):
         await channel.send("It's Lapis.")
 
-bot.run(os.environ['DISCORDBOTTOKEN'], reconnect=True)
-#unless otherwise stated, code written by Fire#4224
+bot.run(os.environ['LapisBotToken'], reconnect=True)
