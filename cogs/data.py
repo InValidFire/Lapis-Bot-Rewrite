@@ -57,7 +57,7 @@ class Data(commands.Cog):
         structure = {
         "global": [
             "dir-/Data/Global/Config",
-            "file-/Data/Global/Config/settings.ini-data-TEST",
+            "file-/Data/Global/Config/settings.ini-TEST",
             "file-/Data/Global/Config/lapislords.ini"
             ],
         "server": [
@@ -82,7 +82,7 @@ class Data(commands.Cog):
                 await self.makedir(splitstring[1])
             if(splitstring[0] == "file"):
                 if(len(splitstring)>2):
-                    await self.makefile(splitstring[1],splitstring[3]) #tells it to write data if any is found.
+                    await self.makefile(splitstring[1],splitstring[2]) #tells it to write data if any is found.
                 if(len(splitstring)==2):
                     await self.makefile(splitstring[1])
         await ctx.send("Created "+type+" data successfully.")

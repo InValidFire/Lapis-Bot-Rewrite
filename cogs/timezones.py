@@ -5,9 +5,6 @@ from simpledate import SimpleDate
 import pytz
 from cogs.log import log
 
-#TODO:
-# make entire time system based on UTC, likely using this module. To replace cogs.timer
-
 class Timezones(commands.Cog):
     debug = False
     logging = False
