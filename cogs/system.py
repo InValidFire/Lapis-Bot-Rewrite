@@ -7,7 +7,6 @@ import core.vars
 from cogs.log import log
 
 #TODO:
-# Add a +time command, shows the time variables.
 # Make certain aspects server specific utilizing the new directory structure
 # Refactor all commands to make more functional, decrease cyclical complexity
 # Subcommands: Use them, instead of interpreting arguments.

@@ -1,5 +1,5 @@
 # Lapis Bot Rewrite
-* Developed by Fire
+* Developed by InValidFire
 
 ## Purpose
 This bot aids us on our server Valdrea doing whatever we need it to, if you want to self host, be my guest. =D
@@ -33,9 +33,9 @@ ___
 * Optimize code, make more functional, sub commands
 * Bug Fixing
 * Data system upgrades
-  * Finish functionalizing: deldir()
-  * Possibly make tree creation by step instead of by folder.
-    * Split at '/', check existence, make if necessary, go to next. More fluid and adaptable, compressable.
+  * ~~Functionalize file deletion~~
+  * ~~Possibly make tree creation by step instead of by folder.~~
+    * ~~Split at '/', check existence, make if necessary, go to next. More fluid and adaptable, compressable.~~
   * Let lapislords send/request files from Bot's Data.
     * Possible uses:
       * recipe interpretation
