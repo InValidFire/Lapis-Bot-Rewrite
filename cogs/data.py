@@ -33,9 +33,9 @@ class Data(commands.Cog):
 
     async def makedir(self,structurepath):
         dir = str(self.dir)
-        folders = structurepath.split("\\")
+        folders = structurepath.split("/")
         for folder in folders:
-            dir = dir+"\\"+folder
+            dir = dir+"/"+folder
             if(os.path.exists(dir) != True):
                 os.makedirs(dir)
             else:
@@ -56,12 +56,12 @@ class Data(commands.Cog):
     async def dirlist(self,serverid):
         structure = {
         "global": [
-            "dir-\\Data\\Global\\Config",
-            "file-\\Data\\Global\\Config\\settings.ini-TEST",
-            "file-\\Data\\Global\\Config\\lapislords.ini"
+            "dir-/Data/Global/Config",
+            "file-/Data/Global/Config/settings.ini-TEST",
+            "file-/Data/Global/Config/lapislords.ini"
             ],
         "server": [
-            "dir-\\Data\\Server\\"+serverid+"\\Config"
+            "dir-/Data/Server/"+serverid+"/Config"
             ]
         }
         return structure
@@ -91,7 +91,7 @@ class Data(commands.Cog):
     async def tree(self,ctx):
         dir = str(self.dir)
         message = ""
-        for dirpath,dirnames,files in os.walk(dir+"\\Data"):
+        for dirpath,dirnames,files in os.walk(dir+"/Data"):
             message = message+dirpath.replace(dir,"")+"\n"
             for file in files:
                 message = message+"└── "+file+"\n"
@@ -128,8 +128,8 @@ class Data(commands.Cog):
                 await ctx.send(file=discord.File(dir+path))
             else:
                 shutil.make_archive("request","zip",dir+path)
-                await ctx.send(file=discord.File(dir+"\\request.zip"))
-                await self.delfile("\\request.zip")
+                await ctx.send(file=discord.File(dir+"/request.zip"))
+                await self.delfile("/request.zip")
         else:
             await ctx.send("Directory not found.")
 
