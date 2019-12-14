@@ -56,12 +56,12 @@ class Data(commands.Cog):
     async def dirlist(self,serverid):
         structure = {
         "global": [
-            "dir-/Data/Global/Config",
-            "file-/Data/Global/Config/settings.ini-TEST",
-            "file-/Data/Global/Config/lapislords.ini"
+            "dir-\\Data\\Global\\Config",
+            "file-\\Data\\Global\\Config\\settings.ini-TEST",
+            "file-\\Data\\Global\\Config\\lapislords.ini"
             ],
         "server": [
-            "dir-/Data/Server/"+serverid+"/Config"
+            "dir-\\Data\\Server\\"+serverid+"\\Config"
             ]
         }
         return structure
